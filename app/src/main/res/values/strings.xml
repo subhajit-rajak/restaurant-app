@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Restaurant App</string>
+    <string name="loginTxt">Already have an account? <font color='#FD511E'>Login</font></string>
+    <string name="signUpTxt">New user create an account now? <font color='#FD511E'>Sign up</font></string>
+    <string name="loginTitle"><b><i>Login here</i></b></string>
+    <string name="signUpTitle"><b><i>Register here</i></b></string>
 </resources>
