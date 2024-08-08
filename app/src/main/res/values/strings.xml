@@ -4,4 +4,5 @@
     <string name="signUpTxt">New user create an account now? <font color='#FD511E'>Sign up</font></string>
     <string name="loginTitle"><b><i>Login here</i></b></string>
     <string name="signUpTitle"><b><i>Register here</i></b></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
