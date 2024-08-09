@@ -1,34 +1,24 @@
 package com.gloomdev.restaurantapp.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.gloomdev.restaurantapp.R
-import com.gloomdev.restaurantapp.databinding.ActivitySplashScreenBinding
+import com.gloomdev.restaurantapp.databinding.ActivityRegisterBinding
 
-class SplashScreenActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySplashScreenBinding
+class RegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Removing Action Bar
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        //Setting splash screen
-        Handler().postDelayed({
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.transition_enter, R.anim.transition_exit)
-            finish()
-        }, 2000)
-
     }
 }
