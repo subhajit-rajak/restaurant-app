@@ -3,4 +3,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="registerInstruction">By clicking, I accept the <b><u>terms of service</u></b> and <b><u>privacy policy</u></b></string>
+    <string name="got_hungry">Got hungry?</string>
+    <string name="let_s_get_you_something">Let\'s get you something</string>
+    <string name="subhajit_what_s_on_your_mind">Subhajit, What\'s on your mind?</string>
+    <string name="all_restaurants_near_you">All Restaurants Near You</string>
+    <string name="pizza">Pizza</string>
+    <string name="noodles">Noodles</string>
+    <string name="dosa">Dosa</string>
+    <string name="momos">Momos</string>
+    <string name="ice_cream">Ice Cream</string>
+    <string name="shakes">Shakes</string>
+    <string name="paratha">Paratha</string>
+    <string name="burger">Burger</string>
+    <string name="sweets">Sweets</string>
+    <string name="idli">Idli</string>
+    <string name="cakes">Cakes</string>
+    <string name="biriyani">Biriyani</string>
 </resources>
