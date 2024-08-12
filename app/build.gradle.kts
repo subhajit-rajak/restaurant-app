@@ -52,5 +52,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //    GLIDE
     implementation (libs.glide)
+
+    // Rounded Image View
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }
