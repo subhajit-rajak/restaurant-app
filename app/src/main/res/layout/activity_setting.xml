@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#800000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- User Information Section -->
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Navigation and Account Management -->
+
+        <TextView
+            android:id="@+id/manage_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:text="My Account"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+        <TextView
+            android:id="@+id/manage_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Manage Address"
+            android:textColor="#000000"
+            android:padding="16dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@id/manage_account"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/favourites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Favourites"
+            android:textColor="#000000"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/manage_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/settings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="#000000"
+            android:padding="16dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@id/favourites"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/payments_refunds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Payments and Refunds"
+            android:textColor="#000000"
+            android:padding="16dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@id/settings"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/payment_modes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Payment Modes"
+            android:textColor="#000000"
+            android:padding="16dp"
+            android:background="#F5F5F5"
+            app:layout_constraintTop_toBottomOf="@id/payments_refunds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:textColor="#000000"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/payment_modes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Past Orders Section -->
+        <TextView
+            android:id="@+id/past_orders_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Past Orders"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:background="@color/grey"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/help"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/past_orders_recycler_view"
+            android:layout_width="0dp"
+            android:background="#F5F5F5"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/past_orders_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
