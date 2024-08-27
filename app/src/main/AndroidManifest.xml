@@ -13,6 +13,9 @@
         android:theme="@style/Theme.RestaurantApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SettingActivity"
             android:exported="false" />
         <activity
@@ -29,7 +32,7 @@
         </activity>
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"
