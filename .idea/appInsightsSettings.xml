@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.gloomdev.restaurantapp" />
+                  <option name="mobileSdkAppId" value="1:159463822933:android:8e71fc6d9605cf98af66dc" />
+                  <option name="projectId" value="restaurant-partner-app-b4409" />
+                  <option name="projectNumber" value="159463822933" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

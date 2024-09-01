@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "159463822933",
+    "firebase_url": "https://restaurant-partner-app-b4409-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "restaurant-partner-app-b4409",
+    "storage_bucket": "restaurant-partner-app-b4409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159463822933:android:8e71fc6d9605cf98af66dc",
+        "android_client_info": {
+          "package_name": "com.gloomdev.restaurantapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFK1QANVVfIDcaot3xYQRd7OCl3uv_R90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159463822933:android:e0f5a65b6de6a879af66dc",
+        "android_client_info": {
+          "package_name": "com.gloomdev.restaurantpartnerapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFK1QANVVfIDcaot3xYQRd7OCl3uv_R90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
