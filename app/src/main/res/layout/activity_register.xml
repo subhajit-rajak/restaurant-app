@@ -57,7 +57,7 @@
                 android:background="@drawable/background_edittext"
                 android:ems="10"
                 android:hint="@string/name"
-                android:inputType="phone"
+                android:inputType="textPersonName"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textColor="#ffffff"

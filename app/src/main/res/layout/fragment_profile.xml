@@ -38,14 +38,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="290dp">
+        android:layout_marginTop="290dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
@@ -55,9 +55,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:foregroundGravity="center"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/account"/>
+                android:foregroundGravity="center"
+                android:src="@drawable/account" />
 
             <LinearLayout
                 android:layout_width="260dp"
@@ -75,9 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Deepak Choudhary"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:text="Deepak Choudhary" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -99,8 +99,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="70dp"
             android:layout_marginEnd="25dp"
-            android:background="#D9D7D7"
-            />
+            android:background="#D9D7D7" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,9 +110,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/email"/>
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/email" />
 
             <LinearLayout
                 android:layout_width="260dp"
@@ -130,9 +129,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="deepakkaler551@gmail.com"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:text="deepakkaler551@gmail.com" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -140,8 +139,8 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_weight="1"
                 android:layout_gravity="center|end"
+                android:layout_weight="1"
                 android:src="@drawable/pencil" />
 
         </LinearLayout>
@@ -152,8 +151,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="70dp"
             android:layout_marginEnd="25dp"
-            android:background="#D9D7D7"
-            />
+            android:background="#D9D7D7" />
 
 
         <LinearLayout
@@ -165,9 +163,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/call"/>
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/call" />
 
             <LinearLayout
                 android:layout_width="260dp"
@@ -184,17 +182,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"
+                    android:text="+919166131551"
                     android:textColor="@color/black"
-                    android:text="+919166131551" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_weight="1"
                 android:layout_gravity="center|end"
+                android:layout_weight="1"
                 android:src="@drawable/pencil" />
 
         </LinearLayout>

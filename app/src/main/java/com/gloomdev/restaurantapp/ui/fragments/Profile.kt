@@ -1,11 +1,22 @@
 package com.gloomdev.restaurantapp.ui.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import com.gloomdev.restaurantapp.R
+
+import com.gloomdev.restaurantapp.databinding.ActivityRegisterBinding
+import com.gloomdev.restaurantapp.databinding.FragmentProfileBinding
+import com.gloomdev.restaurantapp.ui.activities.RegisterActivity
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +32,8 @@ class Profile : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentProfileBinding
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +47,37 @@ class Profile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Initialize FirebaseAuth
+        mAuth = FirebaseAuth.getInstance()
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        // Set the click listener for the logout button (imageView4)
+        binding.imageView4.setOnClickListener {
+            signOutAndClearPreferences()
+        }
+        return binding.root
+    }
+
+    private fun signOutAndClearPreferences() {
+        // Clear shared preferences
+        val sharedPreferences =
+            requireContext().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
+        // Sign out from Firebase
+        mAuth.signOut()
+
+        // Navigate to RegisterActivity
+        val intent = Intent(requireContext(), RegisterActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+
+        // Finish the current activity
+        requireActivity().finish()
     }
 
     companion object {
