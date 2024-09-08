@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 app:layout_constraintVertical_bias="0.5">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/restaurantImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/restaurant_sample" />
@@ -41,7 +41,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/restaurantNameTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -57,12 +57,12 @@
                 android:id="@+id/imageView3"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="@+id/restaurantNameTxt"
+                app:layout_constraintTop_toBottomOf="@+id/restaurantNameTxt"
                 app:srcCompat="@drawable/star" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/ratingtxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -83,13 +83,13 @@
                 android:text="•"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView7"
-                app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toTopOf="@+id/textView7"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingtxt"
+                app:layout_constraintStart_toEndOf="@+id/ratingtxt"
+                app:layout_constraintTop_toTopOf="@+id/ratingtxt"
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/DeliveryTimeTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -103,7 +103,7 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/availableFoodTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -113,14 +113,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/addressTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:fontFamily="@font/inter"
                 android:text="Subhash Chandra Road"
-                app:layout_constraintStart_toStartOf="@+id/textView10"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintStart_toStartOf="@+id/availableFoodTxt"
+                app:layout_constraintTop_toBottomOf="@+id/availableFoodTxt" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -130,12 +130,12 @@
                 android:fontFamily="@font/inter"
                 android:text="•"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toTopOf="@+id/textView11" />
+                app:layout_constraintBottom_toBottomOf="@+id/addressTxt"
+                app:layout_constraintStart_toEndOf="@+id/addressTxt"
+                app:layout_constraintTop_toTopOf="@+id/addressTxt" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/DistanceTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
