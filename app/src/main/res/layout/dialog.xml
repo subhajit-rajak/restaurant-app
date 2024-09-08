@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/zxing_transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg"
+        android:padding="20sp">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:hint="Edit the content here."
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/black"
+            app:cursorColor="@color/black"
+            app:cursorErrorColor="@color/error"
+            app:hintTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:drawableStart="@drawable/edit_icon_dialog_box"
+                android:imeOptions="actionNext"
+                
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/password"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/register_btn"
+            android:text="Submit"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="10sp"
+            android:layout_toStartOf="@id/submitButton"
+            android:background="@drawable/login_btn"
+            android:text="Cancel" />
+
+    </RelativeLayout>
+</RelativeLayout>

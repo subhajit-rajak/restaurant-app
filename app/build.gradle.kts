@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,4 +70,8 @@ dependencies {
     implementation (libs.glide)
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
+    implementation ("com.google.firebase:firebase-firestore:24.9.0") // Firestore
+    implementation ("com.squareup.picasso:picasso:2.8")              // Picasso for image loading
 }

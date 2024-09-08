@@ -3,17 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/grey"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.Profile">
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/logo"
+            android:id="@+id/profileImage"
             android:layout_width="200sp"
             android:layout_height="200sp"
             android:layout_alignParentTop="true"
@@ -24,21 +22,21 @@
             />
 
         <ImageView
+            android:id="@+id/editProfileImage"
             android:layout_width="49dp"
-            android:layout_height="82dp"
-            android:layout_alignBottom="@id/logo"
-            android:layout_alignParentTop="true"
+            android:layout_height="50dp"
+            android:layout_marginTop="150dp"
+            android:layout_alignTop="@id/profileImage"
+            android:layout_alignBottom="@id/profileImage"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="190dp"
             android:layout_marginEnd="123dp"
-            android:layout_marginBottom="-2dp"
             android:src="@drawable/camera" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="270dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -72,10 +70,10 @@
                     android:text="Name" />
 
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Deepak Choudhary"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -83,7 +81,7 @@
 
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/editName"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center|end"
@@ -126,10 +124,10 @@
                     android:text="Email" />
 
                 <TextView
+                    android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="deepakkaler551@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -137,6 +135,7 @@
 
 
             <ImageView
+                android:id="@+id/editEmail"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center|end"
@@ -179,16 +178,17 @@
                     android:text="Phone" />
 
                 <TextView
+                    android:id="@+id/number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="+919166131551"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/editPhoneNumber"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center|end"
@@ -197,13 +197,19 @@
 
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:indeterminateTint="#64DD17"
+            android:layout_height="wrap_content" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/logoutButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center|end"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="30dp"
             android:src="@drawable/logout" />
 

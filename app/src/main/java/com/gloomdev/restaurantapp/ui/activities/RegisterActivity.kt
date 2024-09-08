@@ -129,7 +129,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun checkIfUserExists(
         username: String, email: String, hashedPassword: String
     ) {
-        val usersRef = database.child("MyFitness").child("userDetails")
+        val usersRef = database.child("Customers").child("customerDetails")
         var isEmailRegistered = false
 
         usersRef.orderByChild("email").equalTo(email)

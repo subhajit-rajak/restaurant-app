@@ -32,7 +32,7 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.transition_enter, R.anim.transition_exit)
             finish()
-        }, 2000)
+        }, 1000)
 
     }
 }
