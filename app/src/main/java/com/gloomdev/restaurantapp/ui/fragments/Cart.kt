@@ -88,7 +88,6 @@ class Cart : Fragment() {
         CheckOut.setOnClickListener {
             Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
         }
-
     }
 
 
