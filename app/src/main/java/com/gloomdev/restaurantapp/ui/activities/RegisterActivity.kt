@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gloomdev.restaurantapp.databinding.ActivityRegisterBinding
 import com.gloomdev.restaurantapp.ui.fragments.Home
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -21,6 +22,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.R
 import com.google.firebase.database.ValueEventListener
 import java.security.MessageDigest
 
@@ -113,11 +115,113 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    //    private fun isUserLoggedIn(): Boolean {
+//        val email = sharedPreferences.getString("email", null)
+//        val password = sharedPreferences.getString("password", null)
+//        return email != null && password != null
+//    }
+//
+//    private fun hashPassword(password: String): String {
+//        val bytes = password.toByteArray(Charsets.UTF_8)
+//        val md = MessageDigest.getInstance("SHA-256")
+//        val digest = md.digest(bytes)
+//        return digest.fold("", { str, it -> str + "%02x".format(it) })
+//    }
+//
+//    private fun checkIfUserExists(
+//        username: String, email: String, hashedPassword: String
+//    ) {
+//        val usersRef = database.child("Customers").child("customerDetails")
+//        var isEmailRegistered = false
+//
+//        usersRef.orderByChild("email").equalTo(email)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    if (snapshot.exists()) {
+//                        showToast("Email already registered")
+//                        isEmailRegistered = true
+//                        return
+//                    }
+//
+//                    usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                            if (!isEmailRegistered) {
+//                                generateUserRefNumberAndSaveDetails(
+//                                    "", username, email, hashedPassword
+//                                )
+//                            }
+//                        }
+//
+//                        override fun onCancelled(error: DatabaseError) {
+//                            showToast("Database read failed: ${error.message}")
+//                        }
+//                    })
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    showToast("Database read failed: ${error.message}")
+//                }
+//            })
+//    }
+//
+//    private fun generateUserRefNumberAndSaveDetails(
+//        userId: String,
+//        username: String,
+//        email: String,
+//        hashedPassword: String = ""
+//    ) {
+//        val usersRef = database
+//            .child("Customers")
+//            .child("customerDetails")
+//        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                val userRefNumber = "USER${1001 + snapshot.childrenCount.toInt()}"
+//                saveUserDetailsToDatabase(
+//                    userRefNumber, userId, username, email, hashedPassword
+//                )
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                showToast("Database read failed: ${error.message}")
+//            }
+//        })
+//    }
+//
+//    private fun saveUserDetailsToDatabase(
+//        userRefNumber: String,
+//        userId: String,
+//        username: String,
+//        email: String,
+//        hashedPassword: String
+//    ) {
+//        val userDetailsRef =
+//            database.child("Customers")
+//                .child("customerDetails")
+//                .child(userRefNumber)
+//
+//        val user = hashMapOf(
+//            "userId" to userRefNumber,
+//            "username" to username,
+//            "email" to email,
+//            "password" to hashedPassword
+//        )
+//
+//        userDetailsRef.setValue(user).addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                showToast("User details saved successfully")
+//                navigateToHomePage()
+//                finish()
+//            } else {
+//                showToast("Failed to save user details: ${task.exception?.message}")
+//            }
+//        }
+//    }
     private fun isUserLoggedIn(): Boolean {
         val email = sharedPreferences.getString("email", null)
         val password = sharedPreferences.getString("password", null)
         return email != null && password != null
     }
+
 
     private fun hashPassword(password: String): String {
         val bytes = password.toByteArray(Charsets.UTF_8)
@@ -127,52 +231,50 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun checkIfUserExists(
-        username: String, email: String, hashedPassword: String
+        username: String,
+        email: String,
+        hashedPassword: String
     ) {
         val usersRef = database.child("Customers").child("customerDetails")
         var isEmailRegistered = false
+        var isMobileRegistered = false
 
-        usersRef.orderByChild("email").equalTo(email)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        showToast("Email already registered")
-                        isEmailRegistered = true
-                        return
-                    }
-
-                    usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if (!isEmailRegistered) {
-                                generateUserRefNumberAndSaveDetails(
-                                    "", username, email, hashedPassword
-                                )
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            showToast("Database read failed: ${error.message}")
-                        }
-                    })
+        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    showToast("Email already registered")
+                    isEmailRegistered = true
+                    return
                 }
-
+                if (!isEmailRegistered && !isMobileRegistered) {
+                    generateUserRefNumberAndSaveDetails(
+                        "", username, email, hashedPassword
+                    )
+                }
+            }
                 override fun onCancelled(error: DatabaseError) {
                     showToast("Database read failed: ${error.message}")
                 }
-            })
+        })
     }
 
     private fun generateUserRefNumberAndSaveDetails(
-        userId: String, username: String, email: String, hashedPassword: String = ""
+        userId: String,
+        username: String,
+        email: String,
+        hashedPassword: String = ""
     ) {
-        val usersRef = database
-            .child("Customers")
-            .child("customerDetails")
+        val usersRef = database.child("Customers").child("customerDetails")
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userRefNumber = "USER${1001 + snapshot.childrenCount.toInt()}"
                 saveUserDetailsToDatabase(
-                    userRefNumber, userId, username, email, hashedPassword
+                    userRefNumber,
+                    userId,
+                    username,
+                    email,
+                    hashedPassword
                 )
             }
 
@@ -189,16 +291,14 @@ class RegisterActivity : AppCompatActivity() {
         email: String,
         hashedPassword: String
     ) {
-        val userDetailsRef =
-            database.child("Customers")
-                .child("customerDetails")
-                .child(userRefNumber)
+        val userDetailsRef = database.child("Customers").child("customerDetails").child(userRefNumber)
 
         val user = hashMapOf(
             "userId" to userRefNumber,
             "username" to username,
             "email" to email,
             "password" to hashedPassword
+           // "profile_image" to "-"
         )
 
         userDetailsRef.setValue(user).addOnCompleteListener { task ->
@@ -218,9 +318,14 @@ class RegisterActivity : AppCompatActivity() {
         finish()
     }
 
+    companion object {
+        private const val RC_SIGN_IN = 9001
+    }
+
     private fun Context.showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
 
 }
 

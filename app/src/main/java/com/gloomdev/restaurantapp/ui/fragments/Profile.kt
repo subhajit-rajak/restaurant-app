@@ -41,6 +41,7 @@ class Profile : Fragment() {
     private lateinit var profileImageView: ImageView
     private lateinit var uploadButton: ImageView
     private val PICK_IMAGE_REQUEST = 1
+   // private lateinit var uid: String
 
     private lateinit var storageReference: StorageReference
     private lateinit var firestore: FirebaseFirestore
@@ -62,6 +63,7 @@ class Profile : Fragment() {
         storageReference = FirebaseStorage.getInstance().reference
         firestore = FirebaseFirestore.getInstance()
         progressBar = binding.progressBar
+       // uid = mAuth.currentUser?.uid.toString()
         loadUserProfilePic()
         //Logout Button
         binding.logoutButton.setOnClickListener {
@@ -91,7 +93,7 @@ class Profile : Fragment() {
 //     Function to load the user's profile picture from Firestore
     private fun loadUserProfilePic() {
         val currentUser = userId
-        if (currentUser != null) {
+        if (currentUser != null ) {
             setInProgress(true)
             val userId = currentUser // Get current logged-in user's ID
             // Fetch the user document from Firestore
@@ -105,10 +107,10 @@ class Profile : Fragment() {
                             // Load the image using Picasso
                             Picasso.get().load(profileImageUrl).into(profileImageView)
                         } else {
-                            showToast("No profile image found")
+                            //showToast("No profile image found")
                         }
                     } else {
-                        showToast("User data not found")
+                        //showToast("User data not found")
                     }
                     setInProgress(false)
                 }
