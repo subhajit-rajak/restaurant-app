@@ -1,5 +1,8 @@
 package com.gloomdev.restaurantapp.ui.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.gloomdev.restaurantapp.R
 import com.gloomdev.restaurantapp.databinding.FragmentHomeBinding
+import com.gloomdev.restaurantapp.ui.activities.AllAddress
 import com.gloomdev.restaurantapp.ui.adapter.HomeAdapter
 import com.gloomdev.restaurantapp.ui.dataclass.RestaurantList
 
@@ -17,6 +21,8 @@ class Home : Fragment() {
     private lateinit var adapter: HomeAdapter
     private val List = arrayListOf<RestaurantList>()
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,6 +34,15 @@ class Home : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+//        sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+//        binding.UAddress.text = sharedPreferences.getString("selectedFlat", "-")+","+
+//                sharedPreferences.getString("selectedArea", "-")+","+
+//                sharedPreferences.getString("selectedState", "-")
+//
+//        binding.UName.text =  sharedPreferences.getString("username", "Hii")
+//        binding.name.text = sharedPreferences.getString("username", "")+", What's on your mind?"
 
         val imageList = ArrayList<SlideModel>()
         imageList.add(SlideModel(R.drawable.slider_image_1, ScaleTypes.FIT))
@@ -50,5 +65,19 @@ class Home : Fragment() {
         adapter = HomeAdapter(List)
         binding.RestaurantRecyclerView.adapter = adapter
         binding.RestaurantRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.UAddress.setOnClickListener {
+            val intent = Intent(context, AllAddress::class.java)
+            startActivity(intent)
+        }
+
+    }
+    override fun onResume() {
+        super.onResume()
+        sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+        binding.UAddress.text = sharedPreferences.getString("selectedFlat", "-")+","+
+                sharedPreferences.getString("selectedArea", "-")+","+
+                sharedPreferences.getString("selectedState", "-")
+        binding.UName.text =  sharedPreferences.getString("username", "Hii")
+        binding.name.text = sharedPreferences.getString("username", "")+", What's on your mind?"
     }
 }
