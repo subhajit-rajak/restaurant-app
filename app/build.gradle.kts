@@ -74,4 +74,7 @@ dependencies {
 
     implementation ("com.google.firebase:firebase-firestore:24.9.0") // Firestore
     implementation ("com.squareup.picasso:picasso:2.8")              // Picasso for image loading
+
+    // get current location from google maps
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
 }

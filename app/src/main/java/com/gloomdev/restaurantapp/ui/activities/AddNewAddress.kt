@@ -1,24 +1,33 @@
 package com.gloomdev.restaurantapp.ui.activities
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.gloomdev.restaurantapp.R
 import com.gloomdev.restaurantapp.databinding.ActivityAddNewAddressBinding
 import com.gloomdev.restaurantapp.ui.dataclass.AllAddressDetailes
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 class AddNewAddress : AppCompatActivity() {
 
@@ -27,6 +36,9 @@ class AddNewAddress : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private var typeOfAddress: String? = null
     var isButtonClicked: Boolean?  = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
 
     private lateinit var sharedPreferences: SharedPreferences
     private var userId: String? = null
@@ -53,6 +65,16 @@ class AddNewAddress : AppCompatActivity() {
 
 
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        binding.useMyLocationButton.setOnClickListener {
+            // Check permissions and request location
+            if (checkPermissions()) {
+                getLastLocation()
+            } else {
+                requestPermissions()
+            }
+        }
         binding.HomeButton.setOnClickListener {
             typeOfAddress = "Home"
             binding.HomeButton.setBackgroundResource(R.drawable.orange_button)
@@ -110,6 +132,83 @@ class AddNewAddress : AppCompatActivity() {
                         showToast("Database read failed: ${error.message}")
                     }
                 })
+            }
+        }
+    }
+
+    private fun checkPermissions(): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    private fun getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permissions are not granted yet
+            return
+        }
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let {
+                    // Get the address from the location coordinates
+                    getAddressFromLocation(location)
+                } ?: run {
+//                    binding.tvAddress.text = "Location not available"
+                    Toast.makeText(this, "Location not available", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(this, "Failed to get location", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    private fun getAddressFromLocation(location: Location) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (addresses != null && addresses.isNotEmpty()) {
+                val address = addresses[0]
+                val premises = if (!address.premises.isNullOrEmpty())"${address.premises}, " else ""
+                binding.areaEditText.setText(premises+address.subLocality)
+                binding.CityEditText.setText(address.locality)
+                binding.StateEditText.setText(address.adminArea)
+                binding.PincodeEditText.setText(address.postalCode)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Unable to get address", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, get the location
+                getLastLocation()
+            } else {
+//                binding.tvAddress.text = "Permission denied"
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }
