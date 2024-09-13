@@ -14,17 +14,46 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/UName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:drawableStart="@drawable/home_red"
+            android:drawablePadding="10dp"
+            android:text="Deepak"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/UAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flat, City"
+            android:textSize="18sp"
+            android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintStart_toStartOf="@+id/UName"
+            app:layout_constraintTop_toBottomOf="@+id/UName" />
+
+        <TextView
             android:id="@+id/textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/inter_black"
             android:text="@string/got_hungry"
             android:textColor="@color/background"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/UAddress" />
 
         <TextView
             android:id="@+id/textView2"
@@ -78,14 +107,17 @@
             app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/inter_black"
             android:text="@string/subhajit_what_s_on_your_mind"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:paddingEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textview"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -98,7 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3">
+            app:layout_constraintTop_toBottomOf="@+id/name">
 
             <LinearLayout
                 android:layout_width="wrap_content"

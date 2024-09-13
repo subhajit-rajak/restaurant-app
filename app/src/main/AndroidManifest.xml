@@ -13,6 +13,16 @@
         android:theme="@style/Theme.RestaurantApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.AllAddress"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:name=".ui.activities.AddNewAddress"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
@@ -29,6 +39,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.activities.MainActivity"
