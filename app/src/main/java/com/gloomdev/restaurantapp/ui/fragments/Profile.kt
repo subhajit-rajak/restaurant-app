@@ -130,7 +130,6 @@ class Profile : Fragment() {
     }
     private fun uploadImageToFirebase(imageUri: Uri) {
         val currentUser = userId
-        //showToast("${mAuth.currentUser}")
         if (currentUser != null) {
             val userId = currentUser // Get the logged-in user's ID
             val fileReference = storageReference.child("profile_pics/$userId.jpg")  // Save image with user ID
