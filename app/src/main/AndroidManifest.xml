@@ -16,15 +16,17 @@
         android:theme="@style/Theme.RestaurantApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.MenuDetails"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.RestaurantProfile"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.AllAddress"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".ui.activities.AddNewAddress"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
