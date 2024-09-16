@@ -45,8 +45,8 @@
         android:fontFamily="@font/inter"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textColor="@color/background"
-        android:textColorHint="#FFAB00"
+        android:textColor="@color/searchBarIconOrange"
+        android:textColorHint="@color/searchBarIconOrange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
