@@ -47,7 +47,7 @@
             android:textColorHint="#FFAB00"
             android:hint="What do you want to order?"
             android:paddingStart="10dp"
-
+            android:inputType="text"
             android:paddingEnd="0dp"
             app:layout_constraintEnd_toEndOf="@id/imageView2"
             app:layout_constraintHorizontal_bias="0.4"

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantapp.databinding.FragmentSearchBinding
 import com.gloomdev.restaurantapp.ui.adapter.MenuItemsAdapter
 import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
+import com.gloomdev.restaurantapp.ui.dataclass.RestaurantIds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -59,23 +60,23 @@ class Search : Fragment() {
     }
 
     private fun fetchDataFromFirebase() {
-        userId = auth.currentUser?.uid ?: ""
 
-        val menuRef = database.getReference("menu").child(userId)
-        menuRef.addValueEventListener(object : ValueEventListener {
+        val userRef = database.getReference("menu")
+        userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                menuList.clear()
-                for (menuSnapshot in snapshot.children) {
-                    val menuItem = menuSnapshot.getValue(MenuItems::class.java)
-                    menuItem?.let { menuList.add(it) }
+                for (userSnapshot in snapshot.children) {
+                    for (menuSnapshot in userSnapshot.children) {
+                        val menuItem = menuSnapshot.getValue(MenuItems::class.java)
+                        menuItem?.let { menuList.add(it) }
+                    }
+                    filteredList.clear()
+                    filteredList.addAll(menuList)
+                    menuAdapter.notifyDataSetChanged()
                 }
-                filteredList.clear()
-                filteredList.addAll(menuList)
-                menuAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error
+                TODO("Not yet implemented")
             }
         })
     }
@@ -83,7 +84,7 @@ class Search : Fragment() {
     // Filter the list based on the query
     private fun filterList(query: String) {
         val filtered = menuList.filter {
-            it.foodName.contains(query,ignoreCase = true)
+            it.foodName.contains(query, ignoreCase = true)
         }
         filteredList.clear()
         filteredList.addAll(filtered)
