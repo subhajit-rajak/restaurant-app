@@ -185,7 +185,8 @@ class AddNewAddress : AppCompatActivity() {
             if (addresses != null && addresses.isNotEmpty()) {
                 val address = addresses[0]
                 val premises = if (!address.premises.isNullOrEmpty())"${address.premises}, " else ""
-                binding.areaEditText.setText(premises+address.subLocality)
+                binding.areaEditText.setText(address.premises)
+                binding.LandmarkEditText.setText(address.subLocality)
                 binding.CityEditText.setText(address.locality)
                 binding.StateEditText.setText(address.adminArea)
                 binding.PincodeEditText.setText(address.postalCode)

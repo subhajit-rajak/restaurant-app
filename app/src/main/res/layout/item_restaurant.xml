@@ -5,6 +5,150 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.5" >-->
+
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cardView"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="125dp"-->
+<!--                android:layout_margin="16dp"-->
+<!--                app:cardCornerRadius="20dp"-->
+<!--                app:cardElevation="2dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="0.5">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/restaurantImage"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:srcCompat="@drawable/restaurant_sample" />-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/restaurantNameTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="Wendy's Burgers"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="18sp"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/cardView"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView3"-->
+<!--                android:layout_width="16dp"-->
+<!--                android:layout_height="16dp"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/restaurantNameTxt"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/restaurantNameTxt"-->
+<!--                app:srcCompat="@drawable/star" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/ratingtxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="4.1 (5K+)"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/imageView3"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/imageView3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/imageView3" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView8"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="•"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintVertical_bias="1.0" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/DeliveryTimeTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="40-45 mins"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textView8"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/textView8"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textView8"-->
+<!--                app:layout_constraintVertical_bias="1.0" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/availableFoodTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="12sp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="Burgers, American, Fast Food, Snacks"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/imageView3"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/imageView3" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/addressTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="12sp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="Subhash Chandra Road"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/availableFoodTxt"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/availableFoodTxt" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView12"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="•"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/addressTxt"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/addressTxt"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/addressTxt" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/DistanceTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="2km"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/textView12"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textView12" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </androidx.cardview.widget.CardView> -->
+<!--    -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,98 +197,103 @@
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                app:layout_constraintStart_toStartOf="@+id/restaurantNameTxt"
-                app:layout_constraintTop_toBottomOf="@+id/restaurantNameTxt"
-                app:srcCompat="@drawable/star" />
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView3"-->
+<!--                android:layout_width="16dp"-->
+<!--                android:layout_height="16dp"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/restaurantNameTxt"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/restaurantNameTxt"-->
+<!--                app:srcCompat="@drawable/star" />-->
 
-            <TextView
-                android:id="@+id/ratingtxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="@font/inter_bold"
-                android:text="4.1 (5K+)"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+<!--            <TextView-->
+<!--                android:id="@+id/ratingtxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="4.1 (5K+)"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/imageView3"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/imageView3"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/imageView3" />-->
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:fontFamily="@font/inter_bold"
-                android:text="•"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/ratingtxt"
-                app:layout_constraintStart_toEndOf="@+id/ratingtxt"
-                app:layout_constraintTop_toTopOf="@+id/ratingtxt"
-                app:layout_constraintVertical_bias="1.0" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView8"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="•"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/ratingtxt"-->
+<!--                app:layout_constraintVertical_bias="1.0" />-->
 
-            <TextView
-                android:id="@+id/DeliveryTimeTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:fontFamily="@font/inter_bold"
-                android:text="40-45 mins"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView8"
-                app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toTopOf="@+id/textView8"
-                app:layout_constraintVertical_bias="1.0" />
+<!--            <TextView-->
+<!--                android:id="@+id/DeliveryTimeTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:fontFamily="@font/inter_bold"-->
+<!--                android:text="40-45 mins"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textView8"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/textView8"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textView8"-->
+<!--                app:layout_constraintVertical_bias="1.0" />-->
 
             <TextView
                 android:id="@+id/availableFoodTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
                 android:fontFamily="@font/inter"
-                android:text="Burgers, American, Fast Food, Snacks"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                android:text="Burgers, American, Fast Food"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/restaurantNameTxt"
+                app:layout_constraintTop_toBottomOf="@+id/restaurantNameTxt" />
 
             <TextView
                 android:id="@+id/addressTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/inter"
                 android:text="Subhash Chandra Road"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/availableFoodTxt"
                 app:layout_constraintTop_toBottomOf="@+id/availableFoodTxt" />
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="@font/inter"
-                android:text="•"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/addressTxt"
-                app:layout_constraintStart_toEndOf="@+id/addressTxt"
-                app:layout_constraintTop_toTopOf="@+id/addressTxt" />
+            <!--            <TextView-->
+<!--                android:id="@+id/textView12"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="•"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/addressTxt"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/addressTxt"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/addressTxt" />-->
 
-            <TextView
-                android:id="@+id/DistanceTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="@font/inter"
-                android:text="2km"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toTopOf="@+id/textView12" />
+<!--            <TextView-->
+<!--                android:id="@+id/DistanceTxt"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="6dp"-->
+<!--                android:fontFamily="@font/inter"-->
+<!--                android:text="2km"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textView12"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/textView12"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textView12" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
