@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.gloomdev.restaurantapp.R
-
+import com.gloomdev.restaurantapp.ui.activities.MenuDetails
 
 
 class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requireContext:Context) : Adapter<MenuItemsAdapter.MenuViewHolder>() {
@@ -35,6 +35,7 @@ class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requir
         return  menuList.size;
     }
 
+
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val menuItem = menuList[position]
 
@@ -43,16 +44,11 @@ class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requir
         holder.availableFoodTxt.text = menuItem.foodDescription
         holder.priceTxt.text = "$${menuItem.foodPrice}"
 
-//        val uri = Uri.parse(menuItem.foodImage)
-//        Glide.with(holder.itemView.context).load(uri).into(holder.searchfoodImage)
-//        // Load food image using Glide
         Glide.with(holder.itemView.context)
             .load(menuItem.foodImage)
             .placeholder(R.drawable.restaurant_sample) // A placeholder image until the actual image loads
             .into(holder.searchfoodImage)
+
     }
-    fun updateList(newList: List<MenuItems>) {
-        menuList = newList as ArrayList<MenuItems>
-        notifyDataSetChanged()
-    }
+
 }

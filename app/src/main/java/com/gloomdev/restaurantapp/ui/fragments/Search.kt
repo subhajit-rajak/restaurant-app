@@ -31,29 +31,26 @@ class Search : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentSearchBinding.inflate(layoutInflater)
         menuList = mutableListOf()
-        menuAdapter = MenuItemsAdapter(menuList,requireContext())
+        filteredList = arrayListOf()
+        menuAdapter = MenuItemsAdapter(filteredList, requireContext())
         binding.searchRecyclerView.adapter = menuAdapter
         auth = FirebaseAuth.getInstance()
         binding.searchRecyclerView.layoutManager = LinearLayoutManager(context)
         database = FirebaseDatabase.getInstance()
         fetchDataFromFirebase()
 
-        // Add TextWatcher to the search EditText for filtering the list as the user types
+        // Add TextWatcher to searchView
         binding.searchView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No action needed
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filterList(s.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {
-                // No action needed
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,44 +58,35 @@ class Search : Fragment() {
         return binding.root
     }
 
-    // Function to filter the restaurant list based on the search query
-    private fun filterList(query: String) {
-        filteredList.clear()
-        if (query.isEmpty()) {
-            filteredList.addAll(menuList)
-        } else {
-            for (menu in menuList) {
-                if (menu.foodName?.contains(query, ignoreCase = true) == true) {
-                    filteredList.add(menu)
+    private fun fetchDataFromFirebase() {
+        userId = auth.currentUser?.uid ?: ""
+
+        val menuRef = database.getReference("menu").child(userId)
+        menuRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                menuList.clear()
+                for (menuSnapshot in snapshot.children) {
+                    val menuItem = menuSnapshot.getValue(MenuItems::class.java)
+                    menuItem?.let { menuList.add(it) }
                 }
+                filteredList.clear()
+                filteredList.addAll(menuList)
+                menuAdapter.notifyDataSetChanged()
             }
-        }
-        menuAdapter.updateList(filteredList)
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle database error
+            }
+        })
     }
-private fun fetchDataFromFirebase() {
-    userId = auth.currentUser?.uid ?: ""
-    //menuList = mutableListOf()
-    val menuRef = database.getReference("menu").child(userId)
-    menuRef.addValueEventListener(object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            menuList.clear()
-            for (menuSnapshot in snapshot.children) {
-                val menuItem = menuSnapshot.getValue(MenuItems::class.java)
-                menuItem?.let { menuList.add(it) }
-            }
-            setAdapter()
-           menuAdapter.notifyDataSetChanged()
+
+    // Filter the list based on the query
+    private fun filterList(query: String) {
+        val filtered = menuList.filter {
+            it.foodName.contains(query,ignoreCase = true)
         }
-        private fun setAdapter() {
-            if (menuList.isNotEmpty()) {
-                val adapter = MenuItemsAdapter(menuList, requireContext())
-                binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                binding.searchRecyclerView.adapter = adapter
-            }
-        }
-        override fun onCancelled(error: DatabaseError) {
-            //Toast.makeText(this@Search, "Failed to load data", Toast.LENGTH_SHORT).show()
-        }
-    })
-}
+        filteredList.clear()
+        filteredList.addAll(filtered)
+        menuAdapter.notifyDataSetChanged()
+    }
 }

@@ -197,7 +197,6 @@ class RegisterActivity : AppCompatActivity() {
             "username" to username,
             "email" to email,
             "password" to hashedPassword
-           // "profile_image" to "-"
         )
 
         userDetailsRef.setValue(user).addOnCompleteListener { task ->
