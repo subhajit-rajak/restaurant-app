@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/searchBarOrange"/>
-<!--    <stroke android:width="2dp" android:color="@color/searchBarGrey"/>-->
+    <stroke android:width="2dp" android:color="@color/searchBarIconOrange"/>
     <corners android:radius="16dp"/>
 </shape>

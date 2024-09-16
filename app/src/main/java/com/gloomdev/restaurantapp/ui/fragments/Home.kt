@@ -126,10 +126,18 @@ class Home : Fragment() {
     override fun onResume() {
         super.onResume()
         sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-        binding.UAddress.text = sharedPreferences.getString("selectedFlat", "-")+","+
-                sharedPreferences.getString("selectedArea", "-")+","+
-                sharedPreferences.getString("selectedState", "-")
-        binding.UName.text =  sharedPreferences.getString("username", "Hii")
-        binding.name.text = sharedPreferences.getString("username", "")+", What's on your mind?"
+        binding.UAddress.text = sharedPreferences.getString("selectedFlat", " - ")+","+
+                sharedPreferences.getString("selectedArea", " - ")+","+
+                sharedPreferences.getString("selectedState", " - ")
+
+        var name = sharedPreferences.getString("username", "Anonymous")
+        if (name != null) {
+            val spaceIndex = name.indexOf(" ")
+            if(spaceIndex!=-1) {
+                name = name.substring(0, spaceIndex)
+            }
+        }
+        binding.UName.text =  "Hey, " + name + "!"
+        binding.name.text = name +", What's on your mind?"
     }
 }
