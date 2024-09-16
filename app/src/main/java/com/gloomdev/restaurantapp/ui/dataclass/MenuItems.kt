@@ -1,7 +1,5 @@
 package com.gloomdev.restaurantapp.ui.dataclass
 
-import android.net.Uri
-
 
 data class MenuItems(
     var foodName: String,

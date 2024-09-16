@@ -1,8 +1,6 @@
 package com.gloomdev.restaurantapp.ui.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.gloomdev.restaurantapp.R
-import com.gloomdev.restaurantapp.ui.activities.MenuDetails
 
 
 class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requireContext:Context) : Adapter<MenuItemsAdapter.MenuViewHolder>() {
@@ -22,7 +19,7 @@ class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requir
         val restaurantNameTxt: TextView = itemView.findViewById(R.id.searchNameTxt)
         val availableFoodTxt: TextView = itemView.findViewById(R.id.searchDescription)
         val priceTxt: TextView = itemView.findViewById(R.id.searchPriceTxt)
-        val searchfoodImage: ImageView = itemView.findViewById(R.id.searchfoodImage)
+        val searchFoodImage: ImageView = itemView.findViewById(R.id.searchfoodImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
@@ -42,12 +39,12 @@ class MenuItemsAdapter(private var menuList: List<MenuItems>, private val requir
         // Set food name, price, and description
         holder.restaurantNameTxt.text = menuItem.foodName
         holder.availableFoodTxt.text = menuItem.foodDescription
-        holder.priceTxt.text = "$${menuItem.foodPrice}"
+        holder.priceTxt.text = "₹"+ menuItem.foodPrice
 
         Glide.with(holder.itemView.context)
             .load(menuItem.foodImage)
-            .placeholder(R.drawable.restaurant_sample) // A placeholder image until the actual image loads
-            .into(holder.searchfoodImage)
+            .placeholder(com.denzcoskun.imageslider.R.drawable.default_loading) // A placeholder image until the actual image loads
+            .into(holder.searchFoodImage)
 
     }
 
