@@ -46,14 +46,12 @@ class Profile : Fragment() {
     private lateinit var storageReference: StorageReference
     private lateinit var firestore: FirebaseFirestore
 
-    private lateinit var progressBar: ProgressBar
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         profileImageView = binding.profileImage
-        uploadButton = binding.editProfileImage
 
         // Initialize Firebase references
         mAuth = FirebaseAuth.getInstance()
@@ -62,7 +60,6 @@ class Profile : Fragment() {
         database = FirebaseDatabase.getInstance().reference
         storageReference = FirebaseStorage.getInstance().reference
         firestore = FirebaseFirestore.getInstance()
-        progressBar = binding.progressBar
        // uid = mAuth.currentUser?.uid.toString()
         loadUserProfilePic()
         //Logout Button
@@ -83,7 +80,7 @@ class Profile : Fragment() {
         }
 
         // Handle upload button click (upload the image)
-        binding.editProfileImage.setOnClickListener {
+        binding.profileImage.setOnClickListener {
             chooseAndUploadImage()
         }
         return binding.root
@@ -94,7 +91,6 @@ class Profile : Fragment() {
     private fun loadUserProfilePic() {
         val currentUser = userId
         if (currentUser != null ) {
-            setInProgress(true)
             val userId = currentUser // Get current logged-in user's ID
             // Fetch the user document from Firestore
             firestore.collection("users").document(userId).get()
@@ -112,7 +108,6 @@ class Profile : Fragment() {
                     } else {
                         //showToast("User data not found")
                     }
-                    setInProgress(false)
                 }
                 .addOnFailureListener { exception ->
                     showToast("\"Error: ${exception.message}\",")
@@ -158,7 +153,6 @@ class Profile : Fragment() {
             .addOnFailureListener {
                 showToast("Error: ${it.message}")
             }
-        setInProgress(false)
     }
     // Handle result of image picker and upload
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -445,14 +439,6 @@ class Profile : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-    private fun setInProgress(inProgress: Boolean) {
-        if (inProgress) {
-            progressBar.visibility = View.VISIBLE
-
-        } else {
-            progressBar.visibility = View.GONE
-        }
     }
 }
 
