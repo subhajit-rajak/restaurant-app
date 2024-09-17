@@ -12,8 +12,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.gloomdev.restaurantapp.R
 import com.gloomdev.restaurantapp.ui.dataclass.CartDetailes
+import com.gloomdev.restaurantapp.ui.dataclass.ItemDetails
+import kotlin.time.times
 
-class CartAdapter(val Detailes: List<CartDetailes>, private val onItemQuantityChange: () -> Unit): Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(val Detailes: MutableList<ItemDetails>, private val onItemQuantityChange: () -> Unit): Adapter<CartAdapter.CartViewHolder>() {
 
     class CartViewHolder(itemView: View) : ViewHolder(itemView) {
         var pic = itemView.findViewById<ImageView>(R.id.picCart)
@@ -38,22 +40,22 @@ class CartAdapter(val Detailes: List<CartDetailes>, private val onItemQuantityCh
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 
         Glide.with(holder.itemView.context)
-            .load(Detailes.get(position).picItem)
+            .load(Detailes.get(position).foodImages)
             .transform(CenterCrop(), RoundedCorners(26))
             .into(holder.pic)
 //        holder.pic.setImageResource(Detailes[position].picItem)
-        holder.title.text = Detailes[position].title
-        holder.feeEachItem.text = Detailes[position].feeEach.toString()
-        holder.numberItem.text = Detailes[position].quantity.toString()
+        holder.title.text = Detailes[position].foodName
+        holder.feeEachItem.text = Detailes[position].foodPrices.toString()
+        holder.numberItem.text = Detailes[position].foodQuantities.toString()
 
-        holder.totelFee.text = "${(Detailes[position].quantity * Detailes[position].feeEach)}"
+        holder.totelFee.text = "${(Detailes[position].foodQuantities?.times(Detailes[position].foodPrices!!))}"
         holder.minusButton.setOnClickListener {
-            if (Detailes[position].quantity > 0) {
-                Detailes[position].quantity--
-                holder.numberItem.text = Detailes[position].quantity.toString()
+            if (Detailes[position].foodQuantities!! > 0) {
+                Detailes[position].foodQuantities = Detailes[position].foodQuantities!! - 1
+                holder.numberItem.text = Detailes[position].foodQuantities.toString()
 
                 holder.totelFee.text =
-                    "${(Detailes[position].quantity * Detailes[position].feeEach)}"
+                    "${(Detailes[position].foodQuantities?.times(Detailes[position].foodPrices!!))}"
                 onItemQuantityChange()
             }
 //            else{
@@ -63,9 +65,9 @@ class CartAdapter(val Detailes: List<CartDetailes>, private val onItemQuantityCh
         }
 
         holder.plusButton.setOnClickListener {
-            Detailes[position].quantity++
-            holder.numberItem.text = Detailes[position].quantity.toString()
-            holder.totelFee.text = "${(Detailes[position].quantity * Detailes[position].feeEach)}"
+            Detailes[position].foodQuantities = Detailes[position].foodQuantities!! + 1
+            holder.numberItem.text = Detailes[position].foodQuantities.toString()
+            holder.totelFee.text = "${(Detailes[position].foodQuantities?.times(Detailes[position].foodPrices!!))}"
 
             onItemQuantityChange()
         }

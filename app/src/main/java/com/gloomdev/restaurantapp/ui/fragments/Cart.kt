@@ -1,138 +1,126 @@
 package com.gloomdev.restaurantapp.ui.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gloomdev.restaurantapp.R
+import com.gloomdev.restaurantapp.databinding.FragmentCartBinding
+import com.gloomdev.restaurantapp.ui.activities.AllAddress
+import com.gloomdev.restaurantapp.ui.adapter.AllAddressAdapter
 import com.gloomdev.restaurantapp.ui.adapter.CartAdapter
-import com.gloomdev.restaurantapp.ui.dataclass.CartDetailes
+import com.gloomdev.restaurantapp.ui.dataclass.ItemDetails
+import com.gloomdev.restaurantapp.ui.dataclass.OrderDetails
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Cart.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Cart : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CartAdapter
-    private lateinit var ItemsTotal: TextView
-    private lateinit var DeliveryService: TextView
-    private lateinit var Tax: TextView
-    private lateinit var TotalPrice: TextView
-    private lateinit var CheckOut: TextView
-    private lateinit var EmptyCart: TextView
-    private lateinit var ScrollView: ScrollView
-
-    private val Details = arrayListOf<CartDetailes>()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCartBinding
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var cartAdapter: CartAdapter
+    private lateinit var itemDetailsList: MutableList<ItemDetails>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        binding = FragmentCartBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ItemsTotal = view.findViewById(R.id.totalFeeTxt)
-        DeliveryService = view.findViewById(R.id.deliveryTxt)
-        Tax = view.findViewById(R.id.taxTxt)
-        TotalPrice = view.findViewById(R.id.totalTxt)
-        CheckOut = view.findViewById(R.id.checkOutTxt)
-        EmptyCart = view.findViewById(R.id.emptyCartTxt)
-        ScrollView = view.findViewById(R.id.ScrollView)
-        recyclerView = view.findViewById(R.id.recyclerview)
 
-        Details.add(CartDetailes(R.drawable.pizza,"Pizza",2,100))
-        Details.add(CartDetailes(R.drawable.burger,"Burger",12,60))
+        mAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
+        binding.recyclerview.layoutManager = LinearLayoutManager(context)
+        sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
 
-        if (Details.isEmpty()){
-            EmptyCart.visibility = View.VISIBLE
-            ScrollView.visibility = View.GONE
+        val userId = sharedPreferences.getString("userId", null)
+        val userIdOfRestaurant = sharedPreferences.getString("userIdOfRestaurant", null)
+
+        if (userId != null && userIdOfRestaurant != null) {
+            // Fetch cart items from Firebase
+            database.child("ItemDetails").child(userIdOfRestaurant).child(userId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        itemDetailsList = mutableListOf()
+                        if (snapshot.exists()) {
+                            for (itemSnapshot in snapshot.children) {
+                                val item = itemSnapshot.getValue(ItemDetails::class.java)
+                                item?.let { itemDetailsList.add(it) }
+                            }
+                            cartAdapter = CartAdapter(itemDetailsList) {
+//                                updateTotalPrice(itemDetailsList)
+                            }
+                            binding.recyclerview.adapter = cartAdapter
+//                            updateTotalPrice(itemDetailsList)
+
+//                            binding.deliveryTxt.text = "50"
+//                            binding.taxTxt.text = "10"
+//                            updateFinalPrice()
+
+                            if (itemDetailsList.isEmpty()) {
+                                binding.emptyCartTxt.visibility = View.VISIBLE
+//                                binding.ScrollView.visibility = View.GONE
+                                binding.checkOutTxt.visibility = View.GONE
+//                                binding.checkOutTxt.text = itemDetailsList.toString()
+                            }
+                        }else {
+                            // No items found, handle the case where snapshot doesn't exist
+                            binding.emptyCartTxt.visibility = View.VISIBLE
+//                            binding.ScrollView.visibility = View.GONE
+                            binding.checkOutTxt.visibility = View.GONE
+                        }
+//                        addressList.reverse()
+//                        val myadapter = AllAddressAdapter(this@AllAddress,addressList)
+//                        recyclerView.adapter = myadapter
+//                        itemDetailsList.reverse()
+//                        cartAdapter = CartAdapter(this@Cart,itemDetailsList)
+//                        binding.recyclerview.adapter = cartAdapter
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(context, "Failed to load data: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+        } else {
+            Toast.makeText(context, "User ID or Restaurant ID is null", Toast.LENGTH_SHORT).show()
         }
 
-        adapter = CartAdapter(Details){
-            updateTotalPrice()
+        binding.checkOutTxt.setOnClickListener {
+
+            val navController = findNavController()
+            navController.navigate(R.id.action_cartFragment_to_checkOutFragment)
+
         }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        updateTotalPrice()
-
-        CheckOut.setOnClickListener {
-            Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
-        }
+//        binding.cartAddressChange.setOnClickListener {
+//            val intent = Intent(context, AllAddress::class.java)
+//            startActivity(intent)
+//        }
     }
 
+//    private fun updateTotalPrice(cartItems: List<ItemDetails>) {
+//
+//
+//    }
 
-    private fun updateTotalPrice() {
-        var itemtotal = 0
-        for (item in Details) {
-            itemtotal += item.quantity * item.feeEach
-        }
-        ItemsTotal.text = itemtotal.toString()
-        DeliveryService.text = "50"
-        Tax.text = "10"
-
-        updateFinalPrice()
-    }
-
-    private fun updateFinalPrice() {
-        // Convert the text values to integers
-        val itemsTotalValue = ItemsTotal.text.toString().toInt()
-        val deliveryServiceValue = DeliveryService.text.toString().toInt()
-        val taxValue = Tax.text.toString().toInt()
-
-        // Calculate the final total price
-        val finalTotalPrice = itemsTotalValue + deliveryServiceValue + taxValue
-
-        TotalPrice.text = "$finalTotalPrice"
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Cart.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Cart().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

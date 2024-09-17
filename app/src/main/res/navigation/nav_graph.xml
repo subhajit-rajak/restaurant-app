@@ -19,10 +19,22 @@
         android:id="@+id/cart"
         android:name="com.gloomdev.restaurantapp.ui.fragments.Cart"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart"/>
+
+    <action
+        android:id="@+id/action_cartFragment_to_checkOutFragment"
+        app:destination="@id/checkout" />
     <fragment
         android:id="@+id/profile"
         android:name="com.gloomdev.restaurantapp.ui.fragments.Profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/checkout"
+        android:name="com.gloomdev.restaurantapp.ui.fragments.CheckOut"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_check_out">
+    </fragment>
+
+
 </navigation>

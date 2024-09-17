@@ -60,11 +60,15 @@ init {
             val previousPosition = selectedPosition
             selectedPosition = holder.adapterPosition
 
+            val landmarkText = if (!note.landmark.isNullOrEmpty()) "${note.landmark}, " else ""
             // Save the selected `allFlat` value in SharedPreferences
             sharedPreferences.edit()
                 .putString("selectedFlat", note.flat)
                 .putString("selectedArea", note.area)
                 .putString("selectedState", note.state)
+                .putString("selectedUserName", note.name)
+                .putString("selectedAddress", note.flat+", "+note.area+", "+landmarkText+note.city+", "+note.state+" - "+note.pincode)
+                .putString("CustomerPhoneNumber", note.mobile)
                 .apply()
 
             // Notify the adapter to refresh the items
