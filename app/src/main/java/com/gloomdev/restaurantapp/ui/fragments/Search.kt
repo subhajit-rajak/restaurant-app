@@ -1,60 +1,93 @@
 package com.gloomdev.restaurantapp.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.gloomdev.restaurantapp.R
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.gloomdev.restaurantapp.databinding.FragmentSearchBinding
+import com.gloomdev.restaurantapp.ui.adapter.MenuItemsAdapter
+import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
+import com.gloomdev.restaurantapp.ui.dataclass.RestaurantIds
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Search.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Search : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var filteredList = arrayListOf<MenuItems>()
+    private lateinit var binding: FragmentSearchBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var menuAdapter: MenuItemsAdapter
+    private lateinit var menuList: MutableList<MenuItems>
+    private lateinit var userId: String
+    private lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        binding = FragmentSearchBinding.inflate(layoutInflater)
+        menuList = mutableListOf()
+        filteredList = arrayListOf()
+        menuAdapter = MenuItemsAdapter(filteredList, requireContext())
+        binding.searchRecyclerView.adapter = menuAdapter
+        auth = FirebaseAuth.getInstance()
+        binding.searchRecyclerView.layoutManager = LinearLayoutManager(context)
+        database = FirebaseDatabase.getInstance()
+        fetchDataFromFirebase()
+
+        // Add TextWatcher to searchView
+        binding.searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterList(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Search.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Search().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun fetchDataFromFirebase() {
+
+        val userRef = database.getReference("menu")
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (userSnapshot in snapshot.children) {
+                    for (menuSnapshot in userSnapshot.children) {
+                        val menuItem = menuSnapshot.getValue(MenuItems::class.java)
+                        menuItem?.let { menuList.add(it) }
+                    }
+                    filteredList.clear()
+                    filteredList.addAll(menuList)
+                    menuAdapter.notifyDataSetChanged()
                 }
             }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    // Filter the list based on the query
+    private fun filterList(query: String) {
+        val filtered = menuList.filter {
+            it.foodName.contains(query, ignoreCase = true)
+        }
+        filteredList.clear()
+        filteredList.addAll(filtered)
+        menuAdapter.notifyDataSetChanged()
     }
 }

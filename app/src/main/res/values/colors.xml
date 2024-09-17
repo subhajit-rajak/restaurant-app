@@ -10,5 +10,9 @@
     <color name="grey2">#666666</color>
     <color name="grey3">#EEEEEE</color>
     <color name="orange">#F44336</color>
+    <color name="transparentOrange">#80F44336</color>
+    <color name="searchBarGrey">#d9d9d9</color>
+    <color name="searchBarOrange">#FFE7B5</color>
+    <color name="searchBarIconOrange">#FFAB00</color>
 
 </resources>
