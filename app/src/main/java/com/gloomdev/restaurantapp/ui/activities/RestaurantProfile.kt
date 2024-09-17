@@ -47,6 +47,7 @@ class RestaurantProfile : AppCompatActivity() {
         // Use the restaurantUid as needed (e.g., to query more details from Firebase)
         if (restaurantUid != null) {
             // Query Firebase with the restaurantUid or display it
+
         } else {
             Toast.makeText(this, "No Restaurant ID found!", Toast.LENGTH_SHORT).show()
         }
