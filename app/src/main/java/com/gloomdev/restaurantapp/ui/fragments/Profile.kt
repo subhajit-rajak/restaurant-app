@@ -185,8 +185,9 @@ class Profile : Fragment() {
         requireActivity().finish()
     }
     private fun fetchUserData(root: View) {
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
         userId?.let { id ->
-            database.child("Customers").child("customerDetails").child(id)
+            database.child("Customers").child("customerDetails").child(uid)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {

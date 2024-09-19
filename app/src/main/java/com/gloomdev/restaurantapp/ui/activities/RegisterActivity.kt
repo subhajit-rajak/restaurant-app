@@ -2,229 +2,96 @@ package com.gloomdev.restaurantapp.ui.activities
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
-
 import com.gloomdev.restaurantapp.databinding.ActivityRegisterBinding
-import com.gloomdev.restaurantapp.ui.fragments.Home
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
+import com.gloomdev.restaurantapp.ui.dataclass.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.R
-import com.google.firebase.database.ValueEventListener
-import java.security.MessageDigest
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
-
-    //Variables
-    private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var username: String
+    private lateinit var confirmpassword: String
     private lateinit var database: DatabaseReference
 
+    private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         //Removing Action Bar
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        //Register Button
+        auth = Firebase.auth
+        database = Firebase.database.reference
+
         binding.registerButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            username = binding.name.text.toString().trim()
+            email = binding.email.text.toString().trim()
+            password = binding.password.text.toString().trim()
+            confirmpassword = binding.confirmpassword.text.toString().trim()
+
+            if(username.isBlank() || email.isBlank() || password.isBlank() != confirmpassword.isBlank()) {
+                Toast.makeText(this, "Fill all credentials", Toast.LENGTH_SHORT).show()
+            } else {
+                createAccount(username, email, password)
+            }
         }
 
-        //Login Button.
         binding.loginToExistingAccount.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
-        }
-
-        // Initialize auth before using it
-        auth = FirebaseAuth.getInstance()
-        sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-        database = FirebaseDatabase.getInstance().reference
-
-        val currentUser = auth.currentUser
-
-        if (currentUser != null && sharedPreferences.getBoolean("rememberMe", true)) {
-            // User is logged in and "Remember Me" is enabled
-            startActivity(Intent(this, Home::class.java))
-            finish()
-        }
-
-        if (isUserLoggedIn()) {
-            navigateToHomePage()
-            return
-        }
-
-        binding.registerButton.setOnClickListener {
-            Log.d("RegisterActivity", "Login button clicked")
-            val username = binding.name.text.toString().trim()
-            val email = binding.email.text.toString().trim()
-            val password = binding.password.text.toString().trim()
-            val confirmPassword = binding.confirmpassword.text.toString().trim()
-            if (validateInputs(username, email, password, confirmPassword)) {
-                val hashedPassword = hashPassword(password)
-                checkIfUserExists(username, email, hashedPassword)
-            }
         }
     }
 
-    //Functions
-    private fun validateInputs(
+    // creates a new account
+    private fun createAccount(
         username: String,
         email: String,
         password: String,
-        confirmPassword: String
-    ): Boolean {
-        if (username.isEmpty() || username.length < 5) {
-            showToast("Please enter a username or at least 5 character")
-            return false
-        }
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showToast("Please enter a valid email address")
-            return false
-        }
-        if (password.isEmpty() || password.length < 8 ) {
-            showToast("Please enter a password or at least 8 character")
-            return false
-        }
-        if (password != confirmPassword) {
-            showToast("Passwords do not match")
-            return false
-        }
-        return true
-    }
 
-    private fun isUserLoggedIn(): Boolean {
-        val email = sharedPreferences.getString("email", null)
-        val password = sharedPreferences.getString("password", null)
-        return email != null && password != null
-    }
-
-
-    private fun hashPassword(password: String): String {
-        val bytes = password.toByteArray(Charsets.UTF_8)
-        val md = MessageDigest.getInstance("SHA-256")
-        val digest = md.digest(bytes)
-        return digest.fold("", { str, it -> str + "%02x".format(it) })
-    }
-
-    private fun checkIfUserExists(
-        username: String,
-        email: String,
-        hashedPassword: String
     ) {
-        val usersRef = database.child("Customers").child("customerDetails")
-        var isEmailRegistered = false
-        var isMobileRegistered = false
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
 
-        usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    showToast("Email already registered")
-                    isEmailRegistered = true
-                    return
-                }
-                if (!isEmailRegistered && !isMobileRegistered) {
-                    generateUserRefNumberAndSaveDetails(
-                        "", username, email, hashedPassword
-                    )
-                }
-            }
-                override fun onCancelled(error: DatabaseError) {
-                    showToast("Database read failed: ${error.message}")
-                }
-        })
-    }
-
-    private fun generateUserRefNumberAndSaveDetails(
-        userId: String,
-        username: String,
-        email: String,
-        hashedPassword: String = ""
-    ) {
-        val usersRef = database.child("Customers").child("customerDetails")
-        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userRefNumber = "USER${1001 + snapshot.childrenCount.toInt()}"
-                saveUserDetailsToDatabase(
-                    userRefNumber,
-                    userId,
-                    username,
-                    email,
-                    hashedPassword
-                )
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                showToast("Database read failed: ${error.message}")
-            }
-        })
-    }
-
-    private fun saveUserDetailsToDatabase(
-        userRefNumber: String,
-        userId: String,
-        username: String,
-        email: String,
-        hashedPassword: String
-    ) {
-        val userDetailsRef = database.child("Customers").child("customerDetails").child(userRefNumber)
-
-        val user = hashMapOf(
-            "userId" to userRefNumber,
-            "username" to username,
-            "email" to email,
-            "password" to hashedPassword
-        )
-
-        userDetailsRef.setValue(user).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                showToast("User details saved successfully")
-                navigateToHomePage()
+            if(task.isSuccessful) {
+                saveUserData(username, email)
+                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
                 finish()
             } else {
-                showToast("Failed to save user details: ${task.exception?.message}")
+                Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
+                Log.d("Account", "createAccount: Failure", task.exception)
             }
         }
     }
 
-    private fun navigateToHomePage() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+    // saves user data in database
+    private fun saveUserData(
+        username: String,
+        email: String
+    ) {
+        val user = User(username, email)
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+//       val userId = database.child("Customers").child("customerDetails")
+//        database.child("user").child(userId).setValue(user)
+         database.child("Customers").child("customerDetails").child(userId).setValue(user)
 
-    companion object {
-        private const val RC_SIGN_IN = 9001
     }
-
     private fun Context.showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
-
 }
-
 
