@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,26 +26,21 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
-
+    private lateinit var rememberMe: CheckBox
     private lateinit var binding: ActivityLoginBinding
 
-    //check if user already signed in
-    override fun onStart() {
-        super.onStart()
-
-        val currentUser = auth.currentUser
-        if(currentUser!=null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
+    // SharedPreferences keys
+    private val PREFS_NAME = "MyPrefsFile"
+    private val KEY_EMAIL = "email"
+    private val KEY_PASSWORD = "password"
+    private val KEY_REMEMBER = "rememberMe"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //Removing Action Bar
+
+        // Removing Action Bar
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -52,14 +48,14 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         database = Firebase.database.reference
-//
-//        binding.email.setText(getString(R.string.guestLoginEmail))
-//        binding.password.setText(getString(R.string.guestLoginPassword))
 
+        rememberMe = binding.rememberMe
+
+        // Handle login button click
         binding.loginButton.setOnClickListener {
             email = binding.email.text.toString().trim()
             password = binding.password.text.toString().trim()
-            if(email.isBlank() || password.isBlank()) {
+            if (email.isBlank() || password.isBlank()) {
                 Toast.makeText(this, "Fill all credentials", Toast.LENGTH_SHORT).show()
             } else {
                 loginUser(email, password)
@@ -67,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.forgotPassword.setOnClickListener {
-            if(binding.email.text.toString().trim().isBlank()) {
+            if (binding.email.text.toString().trim().isBlank()) {
                 Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show()
             } else {
                 auth.sendPasswordResetEmail(binding.email.text.toString().trim())
@@ -84,10 +80,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // user logging in
+    // Log in the user
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if(task.isSuccessful) {
+            if (task.isSuccessful) {
+                // Save credentials if "Remember Me" is checked
+                saveLoginCredentials(email, password, rememberMe.isChecked)
+
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -97,5 +96,15 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("Account", "loginUser: Failed", task.exception)
             }
         }
+    }
+
+    // Save login credentials and "Remember Me" state to SharedPreferences
+    private fun saveLoginCredentials(email: String, password: String, rememberMeChecked: Boolean) {
+        val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(KEY_EMAIL, email)
+        editor.putString(KEY_PASSWORD, password)
+        editor.putBoolean(KEY_REMEMBER, rememberMeChecked)
+        editor.apply()
     }
 }
