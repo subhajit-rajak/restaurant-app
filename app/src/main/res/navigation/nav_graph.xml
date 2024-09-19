@@ -1,40 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/home">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/nav_graph"
+app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/home"
-        android:name="com.gloomdev.restaurantapp.ui.fragments.Home"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/search"
-        android:name="com.gloomdev.restaurantapp.ui.fragments.Search"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/cart"
-        android:name="com.gloomdev.restaurantapp.ui.fragments.Cart"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart"/>
+<fragment
+    android:id="@+id/home"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.Home"
+    android:label="fragment_home"
+    tools:layout="@layout/fragment_home" />
+<fragment
+    android:id="@+id/search"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.Search"
+    android:label="fragment_search"
+    tools:layout="@layout/fragment_search" />
+<fragment
+    android:id="@+id/cart"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.Cart"
+    android:label="fragment_cart"
+    tools:layout="@layout/fragment_cart"/>
+
+<action
+    android:id="@+id/action_cartFragment_to_checkOutFragment"
+    app:destination="@id/checkout" />
+<fragment
+    android:id="@+id/profile"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.Profile"
+    android:label="fragment_profile"
+    tools:layout="@layout/fragment_profile" />
+<fragment
+    android:id="@+id/checkout"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.CheckOut"
+    android:label="fragment_checkout"
+    tools:layout="@layout/fragment_check_out">
 
     <action
-        android:id="@+id/action_cartFragment_to_checkOutFragment"
-        app:destination="@id/checkout" />
+        android:id="@+id/action_checkOutFragment_to_bottomsheetFragment"
+        app:destination="@id/bootomsheet"
+        app:popUpTo="@id/checkout"
+        app:popUpToInclusive="true"/>
+</fragment>
+<fragment
+    android:id="@+id/bootomsheet"
+    android:name="com.gloomdev.restaurantapp.ui.fragments.BottomSheet"
+    android:label="fragment_bottom_sheet"
+    tools:layout="@layout/fragment_bottom_sheet">
+
+    <action
+        android:id="@+id/action_bottomSheetFragment_to_HomeFragment"
+        app:destination="@id/home"
+        app:popUpToInclusive="true"
+        app:popUpTo="@id/bootomsheet" />
+
+</fragment>
+
     <fragment
-        android:id="@+id/profile"
-        android:name="com.gloomdev.restaurantapp.ui.fragments.Profile"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/checkout"
-        android:name="com.gloomdev.restaurantapp.ui.fragments.CheckOut"
-        android:label="fragment_checkout"
-        tools:layout="@layout/fragment_check_out">
-    </fragment>
+        android:id="@+id/history"
+        android:name="com.gloomdev.restaurantapp.ui.fragments.History"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+
 
 
 </navigation>

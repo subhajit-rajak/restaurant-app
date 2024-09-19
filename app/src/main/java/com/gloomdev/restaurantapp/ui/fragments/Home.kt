@@ -129,7 +129,7 @@ class Home : Fragment() {
         binding.UAddress.text = sharedPreferences.getString("selectedFlat", "-")+","+
                 sharedPreferences.getString("selectedArea", "-")+","+
                 sharedPreferences.getString("selectedState", "-")
-        binding.UName.text =  sharedPreferences.getString("username", "Hii")
+        binding.UName.text =  sharedPreferences.getString("selectedUserName", "Hii")
         //binding.name.text = sharedPreferences.getString("username", "")+", What's on your mind?"
     }
 }

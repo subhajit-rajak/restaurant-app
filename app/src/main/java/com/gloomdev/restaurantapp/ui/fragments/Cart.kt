@@ -53,12 +53,14 @@ class Cart : Fragment() {
         binding.recyclerview.layoutManager = LinearLayoutManager(context)
         sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
 
-        val userId = sharedPreferences.getString("userId", null)
+//        val userId = sharedPreferences.getString("userId", null)
+        val userId = mAuth.currentUser?.uid
         val userIdOfRestaurant = sharedPreferences.getString("userIdOfRestaurant", null)
 
         if (userId != null && userIdOfRestaurant != null) {
             // Fetch cart items from Firebase
-            database.child("ItemDetails").child(userIdOfRestaurant).child(userId)
+            database.child("Customers").child("customerDetails").child(userId).child("CartItems").child(userIdOfRestaurant)
+//            database.child("ItemDetails").child(userIdOfRestaurant).child(userId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         itemDetailsList = mutableListOf()

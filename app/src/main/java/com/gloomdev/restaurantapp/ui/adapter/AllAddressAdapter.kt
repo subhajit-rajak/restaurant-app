@@ -12,12 +12,18 @@ import com.gloomdev.restaurantapp.ui.dataclass.AllAddressDetailes
 
 class AllAddressAdapter(
     private val context: Context,
-    private val list: List<AllAddressDetailes>
+    private val list: List<AllAddressDetailes>,
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<AllAddressAdapter.AddressViewHolder>() {
 
     private var selectedPosition: Int = RecyclerView.NO_POSITION
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
 
+
+    // Define an interface for the callback
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
 
 init {
     // Load the previously selected address, area, and state values from SharedPreferences
@@ -74,6 +80,8 @@ init {
             // Notify the adapter to refresh the items
             notifyItemChanged(previousPosition)
             notifyItemChanged(selectedPosition)
+            // Call the callback to finish the activity
+            onItemClickListener.onItemClick()
         }
     }
 }
