@@ -120,7 +120,7 @@ class CheckOut : Fragment() {
 
     private fun placeOrder() {
         userId = mAuth.currentUser?.uid
-        val time = System.currentTimeMillis()
+        val time = System.currentTimeMillis().toString()
         val itemPushKey = database.child("OrderDetails").push().key
 
 //        // Retrieve address details from shared preferences
