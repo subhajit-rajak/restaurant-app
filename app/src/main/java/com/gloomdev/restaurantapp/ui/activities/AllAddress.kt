@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class AllAddress : AppCompatActivity() {
+class AllAddress : AppCompatActivity(), AllAddressAdapter.OnItemClickListener  {
     private val binding:ActivityAllAddressBinding by lazy {
         ActivityAllAddressBinding.inflate(layoutInflater)
     }
@@ -50,8 +50,8 @@ class AllAddress : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-        userId = sharedPreferences.getString("userId", "-")
-
+//        userId = sharedPreferences.getString("userId", "-")
+        userId = auth.currentUser?.uid
         // Initialize RecyclerView and set layout manager
         recyclerView = binding.AllAddressRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -71,7 +71,7 @@ class AllAddress : AppCompatActivity() {
                             }
                         }
                         addressList.reverse()
-                        val myadapter = AllAddressAdapter(this@AllAddress,addressList)
+                        val myadapter = AllAddressAdapter(this@AllAddress,addressList,this@AllAddress)
                         recyclerView.adapter = myadapter
                     }
 
@@ -89,6 +89,9 @@ class AllAddress : AppCompatActivity() {
 
     }
 
+    override fun onItemClick() {
+        finish()
+    }
 
 
 }

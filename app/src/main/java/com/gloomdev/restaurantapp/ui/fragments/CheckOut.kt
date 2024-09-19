@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gloomdev.restaurantapp.R
 import com.gloomdev.restaurantapp.databinding.FragmentCheckOutBinding
 import com.gloomdev.restaurantapp.ui.activities.AllAddress
 import com.gloomdev.restaurantapp.ui.adapter.CartAdapter
@@ -22,6 +24,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 import java.util.Date
 import java.util.Locale
 
@@ -33,6 +36,8 @@ class CheckOut : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var cartAdapter: CartAdapter
     private lateinit var itemDetailsList: MutableList<ItemDetails>
+    private var userId: String? = null
+    private var userIdOfRestaurant: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,14 +53,18 @@ class CheckOut : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
         binding.recyclerview.layoutManager = LinearLayoutManager(context)
-        sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+        sharedPreferences =
+            requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
 
-        val userId = sharedPreferences.getString("userId", null)
-        val userIdOfRestaurant = sharedPreferences.getString("userIdOfRestaurant", null)
+//        val userId = sharedPreferences.getString("userId", null)
+        val userId = mAuth.currentUser?.uid
+         userIdOfRestaurant = sharedPreferences.getString("userIdOfRestaurant", null)
 
         if (userId != null && userIdOfRestaurant != null) {
             // Fetch cart items from Firebase
-            database.child("ItemDetails").child(userIdOfRestaurant).child(userId)
+//            database.child("ItemDetails").child(userIdOfRestaurant).child(userId)
+            database.child("Customers").child("customerDetails").child(userId).child("CartItems")
+                .child(userIdOfRestaurant!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         itemDetailsList = mutableListOf()
@@ -82,7 +91,11 @@ class CheckOut : Fragment() {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(context, "Failed to load data: ${error.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "Failed to load data: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
         } else {
@@ -91,7 +104,8 @@ class CheckOut : Fragment() {
 
         binding.checkOutTxt.setOnClickListener {
             if (itemDetailsList.isNotEmpty()) {
-                placeOrder(userId, userIdOfRestaurant)
+//                placeOrder(userId, userIdOfRestaurant)
+                placeOrder()
 
             } else {
                 Toast.makeText(context, "Cart is empty!", Toast.LENGTH_SHORT).show()
@@ -104,51 +118,113 @@ class CheckOut : Fragment() {
         }
     }
 
-    private fun placeOrder(userId: String?, userIdOfRestaurant: String?) {
-        // Retrieve address details from shared preferences
+    private fun placeOrder() {
+        userId = mAuth.currentUser?.uid
+        val time = System.currentTimeMillis().toString()
+        val itemPushKey = database.child("OrderDetails").push().key
+
+//        // Retrieve address details from shared preferences
         val userName = sharedPreferences.getString("selectedUserName", "-")
         val userAddress = sharedPreferences.getString("selectedAddress", "-")
         val phoneNumber = sharedPreferences.getString("CustomerPhoneNumber", "-")
+
         val totalPrice = binding.totalTxt.text.toString()
 
-        // Create lists for order items
-        val foodNames = itemDetailsList.map { it.foodName!! }.toMutableList()
-        val foodImages = itemDetailsList.map { it.foodImages!! }.toMutableList()
-        val foodPrices = itemDetailsList.map { it.foodPrices.toString() }.toMutableList()
-        val foodQuantities = itemDetailsList.map { it.foodQuantities!! }.toMutableList()
-
-        // Create the OrderDetails object
+//         Create lists for order items
+        val foodNames = itemDetailsList.map { it.foodName!! } as ArrayList<String>
+        val foodImages = itemDetailsList.map { it.foodImages!! } as ArrayList<String>
+        val foodPrices = itemDetailsList.map { it.foodPrices.toString() } as ArrayList<String>
+        val foodQuantities = itemDetailsList.map { it.foodQuantities!! } as ArrayList<Int>
         val orderDetails = OrderDetails(
-            userUid = userId,
-            userName = userName,
-            foodNames = foodNames,
-            foodImages = foodImages,
-            foodPrices = foodPrices,
-            foodQuantities = foodQuantities,
-            address = userAddress,
-            totalPrice = totalPrice,
-            phoneNumber = phoneNumber,
-            orderAccepted = false,
-            paymentReceived = false,
-            currentTime = getFormattedDateTime(System.currentTimeMillis())
-
+            userId,
+            userName,
+            foodNames,
+            foodImages,
+            foodPrices,
+            foodQuantities,
+            userAddress,
+            totalPrice,
+            phoneNumber,
+            time,
+            itemPushKey,
+            false,
+            false
         )
-
-        // Save the order to Firebase
-        val orderReference = database.child("Orders").child(userIdOfRestaurant!!).child(userId!!).push()
-        orderReference.setValue(orderDetails)
-            .addOnSuccessListener {
-                Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
-            }
+        val orderReference = database.child("OrderDetails").child(userIdOfRestaurant!!).child(itemPushKey!!)
+        orderReference.setValue(orderDetails).addOnSuccessListener {
+            val navController = findNavController()
+            navController.navigate(R.id.action_checkOutFragment_to_bottomsheetFragment)
+            removeItemFromCart()
+            addOrderToHistory(orderDetails)
+        }
             .addOnFailureListener {
                 Toast.makeText(context, "Failed to place order: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
-    fun getFormattedDateTime(currentTime: Long): String {
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
-        val date = Date(currentTime)
-        return dateFormat.format(date)
+
+    private fun addOrderToHistory(orderDetails: OrderDetails) {
+        database.child("Customers").child("customerDetails").child(userId!!).child("BuyHistory")
+            .child(orderDetails.itemPushKey!!)
+            .setValue(orderDetails).addOnSuccessListener {
+
+            }
     }
+
+    private fun removeItemFromCart() {
+        val userIdOfRestaurant = sharedPreferences.getString("userIdOfRestaurant", null)
+        val cartItemReference =
+            database.child("Customers").child("customerDetails").child(userId!!).child("CartItems")
+                .child(userIdOfRestaurant!!)
+        cartItemReference.removeValue()
+    }
+
+//    private fun placeOrder(userId: String?, userIdOfRestaurant: String?) {
+//        // Retrieve address details from shared preferences
+//        val userName = sharedPreferences.getString("selectedUserName", "-")
+//        val userAddress = sharedPreferences.getString("selectedAddress", "-")
+//        val phoneNumber = sharedPreferences.getString("CustomerPhoneNumber", "-")
+//        val totalPrice = binding.totalTxt.text.toString()
+//
+//        // Create lists for order items
+//        val foodNames = itemDetailsList.map { it.foodName!! }.toMutableList()
+//        val foodImages = itemDetailsList.map { it.foodImages!! }.toMutableList()
+//        val foodPrices = itemDetailsList.map { it.foodPrices.toString() }.toMutableList()
+//        val foodQuantities = itemDetailsList.map { it.foodQuantities!! }.toMutableList()
+//
+//        // Create the OrderDetails object
+//        val orderDetails = OrderDetails(
+//            userUid = userId,
+//            userName = userName,
+//            foodNames = foodNames,
+//            foodImages = foodImages,
+//            foodPrices = foodPrices,
+//            foodQuantities = foodQuantities,
+//            address = userAddress,
+//            totalPrice = totalPrice,
+//            phoneNumber = phoneNumber,
+//            orderAccepted = false,
+//            paymentReceived = false,
+//            currentTime = getFormattedDateTime(System.currentTimeMillis())
+//
+//        )
+//
+//        // Save the order to Firebase
+//        val orderReference = database.child("Orders").child(userIdOfRestaurant!!).child(userId!!).push()
+//        orderReference.setValue(orderDetails)
+//            .addOnSuccessListener {
+//                Toast.makeText(context, "Order placed successfully!", Toast.LENGTH_SHORT).show()
+//                val navController = findNavController()
+//                navController.navigate(R.id.action_checkOutFragment_to_bottomsheetFragment)
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(context, "Failed to place order: ${it.message}", Toast.LENGTH_SHORT).show()
+//            }
+//    }
+////    fun getFormattedDateTime(currentTime: Long): String {
+//        val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+//        val date = Date(currentTime)
+//        return dateFormat.format(date)
+//    }
 
     private fun updateTotalPrice(cartItems: List<ItemDetails>) {
         var itemTotal = 0.0
@@ -163,7 +239,6 @@ class CheckOut : Fragment() {
         val itemsTotalValue = binding.totalFeeTxt.text.toString().toDouble()
         val deliveryServiceValue = binding.deliveryTxt.text.toString().toDouble()
         val taxValue = binding.taxTxt.text.toString().toDouble()
-
         val finalTotalPrice = itemsTotalValue + deliveryServiceValue + taxValue
         binding.totalTxt.text = finalTotalPrice.toString()
     }

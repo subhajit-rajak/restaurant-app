@@ -60,8 +60,9 @@ class AddNewAddress : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         isButtonClicked = false
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-        userId = sharedPreferences.getString("userId", "-")
+//        userId = sharedPreferences.getString("userId", "-")
 
+        userId = mAuth.currentUser?.uid
 
 
 

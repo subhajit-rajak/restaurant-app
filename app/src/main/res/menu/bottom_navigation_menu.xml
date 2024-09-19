@@ -16,8 +16,14 @@
         android:icon="@drawable/cart"
         android:title="Cart"/>
     <item
+        android:id="@+id/history"
+        android:enabled="true"
+        android:icon="@drawable/baseline_history_24"
+        android:title="History"/>
+    <item
         android:id="@+id/profile"
         android:enabled="true"
         android:icon="@drawable/profile"
         android:title="Profile"/>
+
 </menu>

@@ -79,21 +79,24 @@ class MenuDetails : AppCompatActivity() {
                             editor.putString("userIdOfRestaurant", RestuarantId)
                             editor.apply()
 
-                            val userId = sharedPreferences.getString("userId", "-")
-                            val userName = sharedPreferences.getString("userIdOfRestaurant", "-")
+//                            val userId = sharedPreferences.getString("userId", "-")
+                           val userId = mAuth.currentUser?.uid
+//                            val userName = sharedPreferences.getString("userIdOfRestaurant", "-")
+                            val userName = sharedPreferences.getString("selectedUserName", "-")
                             val itemDetails = ItemDetails(userId,userName,it.foodName,it.foodImage,it.foodPrice.toInt(),RestuarantId!!,1)
                             binding.AddToCart.setOnClickListener {
 
-                                val ItemDetails =
-                                    database.child("ItemDetails").child(RestuarantId!!)
+                                val ItemDetails =   database.child("Customers").child("customerDetails").child(RestuarantId).child(userId!!).child("CartItems")
+//                                    database.child("ItemDetails").child(RestuarantId!!)
                                 ItemDetails.addListenerForSingleValueEvent(object :
                                     ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
 
                                         val orderRefNumber =
                                             "Order${101 + snapshot.childrenCount.toInt()}"
-                                        database.child("ItemDetails").child(RestuarantId).child(userId!!)
-                                            .child(itemKey!!).setValue(itemDetails)
+                                        database.child("Customers").child("customerDetails").child(userId).child("CartItems").child(RestuarantId).child(itemKey!!).setValue(itemDetails)
+//                                        database.child("ItemDetails").child(RestuarantId).child(userId!!)
+//                                            .child(itemKey!!).setValue(itemDetails)
 
 
                                             .addOnCompleteListener { task ->
