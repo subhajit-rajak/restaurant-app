@@ -19,7 +19,7 @@ class OrderDetails():Parcelable {
     var orderAccepted: Boolean = false
     var paymentReceived: Boolean = false
     var itemPushKey: String? = null
-    var currentTime: String? = null
+    var currentTime: Long = 0
 
     constructor(parcel: Parcel) : this() {
         userUid = parcel.readString()
@@ -30,7 +30,7 @@ class OrderDetails():Parcelable {
         orderAccepted = parcel.readByte() != 0.toByte()
         paymentReceived = parcel.readByte() != 0.toByte()
         itemPushKey = parcel.readString()
-        currentTime = parcel.readString()
+        currentTime = parcel.readLong()
     }
 
     constructor(
@@ -43,7 +43,7 @@ class OrderDetails():Parcelable {
         userAddress: String?,
         totalPrice: String?,
         phoneNumber: String?,
-        time: String?,
+        time: Long,
         itemPushKey: String?,
         b: Boolean,
         b1: Boolean
@@ -93,7 +93,7 @@ class OrderDetails():Parcelable {
         parcel.writeByte(if (orderAccepted) 1 else 0)
         parcel.writeByte(if (paymentReceived) 1 else 0)
         parcel.writeString(itemPushKey)
-        parcel.writeString(currentTime)
+        parcel.writeLong(currentTime)
     }
 
     override fun describeContents(): Int {
