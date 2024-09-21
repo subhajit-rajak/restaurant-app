@@ -7,15 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.gloomdev.restaurantapp.R
-import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
-import com.gloomdev.restaurantapp.ui.dataclass.RestaurantList
 import com.gloomdev.restaurantapp.ui.activities.RestaurantProfile
 import com.gloomdev.restaurantapp.ui.dataclass.RestaurantListHome
 
