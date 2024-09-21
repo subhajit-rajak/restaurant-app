@@ -1,14 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.fragments.History">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/historyConsLayout"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="50dp"
+            android:textSize="22sp"
+            android:fontFamily="@font/inter_bold"
+            android:textStyle="bold"
+            android:text="Recent Buy"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView6"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView25"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recentbuyItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="MissingClass">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/buyAgainFoodImage"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/noodles" />
+
+                </androidx.cardview.widget.CardView>
+<!--                <ImageView-->
+<!--                    android:id="@+id/buyAgainFoodImage"-->
+<!--                    android:layout_width="62dp"-->
+<!--                    android:layout_height="62dp"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:src="@drawable/noodles"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+                <TextView
+                    android:id="@+id/buyAgainFoodName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:layout_marginTop="16dp"
+                    android:text="FoodName"
+                    android:textColor="@color/black"
+
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/cardView3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/buyAgainFoodPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="5"
+                    android:textSize="20sp"
+                    android:drawablePadding="2dp"
+                    android:drawableStart="@drawable/rupeesmall"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/buyAgainFoodName"
+                    app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="32dp"
+                    app:cardBackgroundColor="#4CAF50"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/buyAgainFoodName"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/previousTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="Previous Buy"
+            android:textSize="22sp"
+            android:fontFamily="@font/inter_bold"
+            android:textStyle="bold"
+
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/buyAgainRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/previousTxt"
+            app:layout_constraintVertical_bias="0.589" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView25"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="16dp"-->
+
+<!--            android:text="Recent Buy"-->
+<!--            android:textColor="@color/black"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cardView6"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginstart="0dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                tools:ignore="MissingClass">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/buyAgainFoodImage"-->
+<!--                    android:layout_width="62dp"-->
+<!--                    android:layout_height="62dp"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:src="@drawable/noodles"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/buyAgainFoodName"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="16dp"-->
+
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:text="FoodName"-->
+<!--                    android:textColor="@color/black"-->
+
+<!--                    app:layout_constraintStart_toEndOf="@+id/buyAgainFoodImage"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/buyAgainFoodPrice"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+
+<!--                    android:text="$5"-->
+<!--                    android:textColor="@color/grey2"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/buyAgainFoodName"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginEnd="32dp"-->
+<!--                    app:cardBackgroundColor="#4CAF50"-->
+<!--                    app:cardCornerRadius="20dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="1.0"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/buyAgainFoodName"-->
+<!--                    app:layout_constraintTop_toTop0f="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView33"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="28dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:text="Recnt buy"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottom0f="@+id/cardView6"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/cardView6" />-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/buyAgainRecyclerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_margin="20dp"-->
+<!--            app:layout_constraintBottom_toBottom0f="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottom0f="@+id/textView33"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView33" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <TextView
+        android:id="@+id/emptyHistoryTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="You have no history"
+        android:visibility="gone"
+        android:textColor="#373b54"
+        android:textSize="25sp"
+        android:layout_gravity="center" />
 
 </FrameLayout>
