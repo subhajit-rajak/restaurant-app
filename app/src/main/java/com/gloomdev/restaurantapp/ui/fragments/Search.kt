@@ -60,7 +60,6 @@ class Search : Fragment() {
     }
 
     private fun fetchDataFromFirebase() {
-
         val userRef = database.getReference("menu")
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -91,3 +90,4 @@ class Search : Fragment() {
         menuAdapter.notifyDataSetChanged()
     }
 }
+

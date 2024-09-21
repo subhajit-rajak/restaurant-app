@@ -83,7 +83,8 @@ class MenuDetails : AppCompatActivity() {
                            val userId = mAuth.currentUser?.uid
 //                            val userName = sharedPreferences.getString("userIdOfRestaurant", "-")
                             val userName = sharedPreferences.getString("selectedUserName", "-")
-                            val itemDetails = ItemDetails(userId,userName,it.foodName,it.foodImage,it.foodPrice.toInt(),RestuarantId!!,1)
+                            val itemDetails = ItemDetails(userId,userName,it.foodName,it.foodImage,it.foodPrice.toInt(),
+                                it.foodPrice,RestuarantId!!,1)
                             binding.AddToCart.setOnClickListener {
 
                                 val ItemDetails =   database.child("Customers").child("customerDetails").child(RestuarantId).child(userId!!).child("CartItems")
