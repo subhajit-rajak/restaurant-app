@@ -19,91 +19,82 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <TextView
-                android:id="@+id/foodName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Food Name"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
                 app:cardCornerRadius="20dp"
+                android:layout_margin="24dp"
+                app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foodName">
+                app:layout_constraintTop_toTopOf="parent">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="250dp">
 
                     <ImageView
                         android:id="@+id/foodImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
                         app:srcCompat="@drawable/burger" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/black_transparent_gradient" />
+
+                    <TextView
+                        android:id="@+id/foodName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="Food Name"
+                        android:textColor="@color/white"
+                        android:textSize="32sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/foodImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/shortDescriptionOfItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="22dp"
-                android:text="Short Description"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/Price" />
 
             <TextView
                 android:id="@+id/shortDescriptionOfItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="22dp"
-                android:text="Restaurant Short Description"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cardView2"
-                app:layout_constraintTop_toBottomOf="@+id/shortDescriptionOfItem" />
+                android:fontFamily="@font/inter"
+                android:paddingEnd="24dp"
+                android:text="A short description about the dish"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/Price"
+                app:layout_constraintTop_toBottomOf="@+id/Price" />
 
 
             <TextView
                 android:id="@+id/Price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="22dp"
-                android:textColor="@color/black"
-                android:text="Price"
-                android:textSize="29sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cardView2"
+                android:fontFamily="@font/inter_black"
+                android:text="₹300"
+                android:textColor="@color/background"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -117,7 +108,7 @@
                 android:background="@drawable/background_btn"
                 android:text="Add To Cart"
                 android:textAllCaps="false"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

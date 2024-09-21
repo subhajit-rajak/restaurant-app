@@ -2,6 +2,7 @@ package com.gloomdev.restaurantapp.ui.activities
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -32,18 +33,10 @@ class MenuDetails : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
+        window.statusBarColor = Color.parseColor("#000000");
         val itemKey = intent.getStringExtra("ITEM_KEY")
         val RestuarantId = intent.getStringExtra("RESTAURANT_UID")
-
-
 
         // Initialize Firebase references
         mAuth = FirebaseAuth.getInstance()
@@ -53,21 +46,10 @@ class MenuDetails : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val menuData = mutableListOf<MenuRestaurantScreen>()
                     if (snapshot.exists()) {
-
-
                         val user = snapshot.getValue(MenuRestaurantScreen::class.java)
                         user?.let {
-
-                            binding.Price.setCompoundDrawablesWithIntrinsicBounds(
-                                R.drawable.rupee,
-                                0,
-                                0,
-                                0
-                            )
-
-
                             binding.foodName.text = it.foodName
-                            binding.Price.text = it.foodPrice
+                            binding.Price.text = "₹"+it.foodPrice
                             binding.shortDescriptionOfItem2.text = it.foodDescription
 
                             Glide.with(this@MenuDetails).load(it.foodImage).centerCrop()
@@ -79,26 +61,18 @@ class MenuDetails : AppCompatActivity() {
                             editor.putString("userIdOfRestaurant", RestuarantId)
                             editor.apply()
 
-//                            val userId = sharedPreferences.getString("userId", "-")
                            val userId = mAuth.currentUser?.uid
-//                            val userName = sharedPreferences.getString("userIdOfRestaurant", "-")
                             val userName = sharedPreferences.getString("selectedUserName", "-")
                             val itemDetails = ItemDetails(userId,userName,it.foodName,it.foodImage,it.foodPrice.toInt(),RestuarantId!!,1)
                             binding.AddToCart.setOnClickListener {
 
                                 val ItemDetails =   database.child("Customers").child("customerDetails").child(RestuarantId).child(userId!!).child("CartItems")
-//                                    database.child("ItemDetails").child(RestuarantId!!)
                                 ItemDetails.addListenerForSingleValueEvent(object :
                                     ValueEventListener {
                                     override fun onDataChange(snapshot: DataSnapshot) {
 
-                                        val orderRefNumber =
-                                            "Order${101 + snapshot.childrenCount.toInt()}"
+                                        val orderRefNumber = "Order${101 + snapshot.childrenCount.toInt()}"
                                         database.child("Customers").child("customerDetails").child(userId).child("CartItems").child(RestuarantId).child(itemKey!!).setValue(itemDetails)
-//                                        database.child("ItemDetails").child(RestuarantId).child(userId!!)
-//                                            .child(itemKey!!).setValue(itemDetails)
-
-
                                             .addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
                                                     Toast.makeText(
@@ -106,21 +80,12 @@ class MenuDetails : AppCompatActivity() {
                                                         "item added to cart successfuly",
                                                         Toast.LENGTH_SHORT
                                                     ).show()
-//                                showToast("User address saved successfully")
-//                                val editor = sharedPreferences.edit()
-//                                editor.putString("userRefNumber", userRefNumber)
-//                                editor.apply()
-
-//                                val intent = Intent(this@AddNewAddress, AllAddress::class.java)
-//                                startActivity(intent)
-//                                finish()
                                                 } else {
                                                     Toast.makeText(
                                                         this@MenuDetails,
                                                         "Failed ",
                                                         Toast.LENGTH_SHORT
                                                     ).show()
-//                                showToast("Failed to save user address: ${task.exception?.message}")
                                                 }
                                             }
                                     }
@@ -135,10 +100,8 @@ class MenuDetails : AppCompatActivity() {
                         }
                     }
                 }
-
-
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@MenuDetails, "Faild to load data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MenuDetails, "Failedd to load data", Toast.LENGTH_SHORT).show()
                 }
             })
 

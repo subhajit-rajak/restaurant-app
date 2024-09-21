@@ -1,5 +1,7 @@
 package com.gloomdev.restaurantapp.ui.activities
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -30,7 +32,7 @@ class RestaurantProfile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        window.statusBarColor = Color.parseColor("#000000");
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

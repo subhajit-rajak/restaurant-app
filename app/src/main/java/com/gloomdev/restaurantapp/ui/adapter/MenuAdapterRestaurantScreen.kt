@@ -5,15 +5,18 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gloomdev.restaurantapp.databinding.EachRestuarntProfileMenuBinding
 import com.gloomdev.restaurantapp.ui.activities.MenuDetails
 import com.gloomdev.restaurantapp.ui.dataclass.MenuRestaurantScreen
 
 
 class MenuAdapterRestaurantScreen(private val context: Context?,private val menu: List<MenuRestaurantScreen>):RecyclerView.Adapter<MenuAdapterRestaurantScreen.MenuViewHolder>() {
-    class MenuViewHolder(val binding: EachRestuarntProfileMenuBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MenuViewHolder(val binding: EachRestuarntProfileMenuBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: MenuRestaurantScreen) {
             binding.foodName.text = note.foodName
+            binding.foodPriceTextView.text = "₹"+note.foodPrice
+            Glide.with(context!!).load(note.foodImage).into(binding.orderedFoodItemImageView)
         }
     }
 
