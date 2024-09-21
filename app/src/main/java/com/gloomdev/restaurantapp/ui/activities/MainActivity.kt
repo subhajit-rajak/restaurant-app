@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(binding.root)
         FirebaseApp.initializeApp(this)
         val navController = findNavController(R.id.fragmentContainerView)

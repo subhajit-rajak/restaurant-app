@@ -180,6 +180,7 @@
                     android:id="@+id/restaurantImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/restaurant_sample" />
 
             </androidx.cardview.widget.CardView>

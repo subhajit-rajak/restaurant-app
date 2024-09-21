@@ -20,12 +20,12 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="32dp"
                 android:text="My Cart"
                 android:textAlignment="center"
-                android:textColor="#ff3d00"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:fontFamily="@font/inter_bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
@@ -36,11 +36,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Order Summary : "
-                android:textColor="#373b54"
+                android:textColor="@color/orange"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"/>
 
 
             <androidx.cardview.widget.CardView
@@ -48,7 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 app:cardCornerRadius="20dp"
-                android:backgroundTint="#F6F6F6">
+                app:cardElevation="5dp">
 
 
                 <LinearLayout
@@ -243,18 +243,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Deliver to :"
-                android:textColor="#373b54"
+                android:textColor="@color/orange"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cartAddressCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 app:cardCornerRadius="20dp"
-                android:backgroundTint="#F6F6F6"
+                app:cardElevation="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

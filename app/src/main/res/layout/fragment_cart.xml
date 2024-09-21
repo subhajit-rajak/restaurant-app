@@ -20,12 +20,12 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="32dp"
                 android:text="My Cart"
                 android:textAlignment="center"
-                android:textColor="#ff3d00"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:fontFamily="@font/inter_bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
