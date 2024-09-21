@@ -23,17 +23,17 @@
             android:layout_height="match_parent"
             tools:ignore="MissingClass">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/buyAgainFoodImage"-->
-<!--                android:layout_width="62dp"-->
-<!--                android:layout_height="62dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:src="@drawable/noodles"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/buyAgainFoodImage"-->
+            <!--                android:layout_width="62dp"-->
+            <!--                android:layout_height="62dp"-->
+            <!--                android:layout_marginStart="8dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:layout_marginBottom="8dp"-->
+            <!--                android:src="@drawable/noodles"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
                 android:layout_width="wrap_content"
@@ -63,46 +63,32 @@
                 android:layout_marginStart="16dp"
 
                 android:fontFamily="@font/inter_bold"
+                android:text="FoodName"
+
+                android:textColor="@color/black"
+                android:textSize="18sp"
                 android:textStyle="bold"
 
-                android:layout_marginTop="16dp"
-                android:text="FoodName"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-
+                app:layout_constraintBottom_toTopOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintStart_toEndOf="@+id/cardView3"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
                 android:id="@+id/buyAgainFoodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="5"
-                android:textSize="20sp"
-                android:drawablePadding="2dp"
                 android:drawableStart="@drawable/rupeesmall"
+                android:drawablePadding="2dp"
                 android:fontFamily="@font/inter_bold"
+                android:text="5"
                 android:textColor="@color/orange"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/buyAgainFoodName"
                 app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buyAgainFoodButton"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/green_button_shape"
-                android:fontFamily="@font/inter_bold"
-                android:text="Buy Again"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/buyAgainFoodName"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
