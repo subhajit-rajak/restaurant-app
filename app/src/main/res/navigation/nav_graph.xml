@@ -14,6 +14,7 @@ app:startDestination="@id/home">
     android:name="com.gloomdev.restaurantapp.ui.fragments.Search"
     android:label="fragment_search"
     tools:layout="@layout/fragment_search" />
+  
 <fragment
     android:id="@+id/cart"
     android:name="com.gloomdev.restaurantapp.ui.fragments.Cart"

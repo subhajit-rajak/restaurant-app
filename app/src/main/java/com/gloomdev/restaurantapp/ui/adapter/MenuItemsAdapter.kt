@@ -1,6 +1,7 @@
 package com.gloomdev.restaurantapp.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
@@ -16,6 +18,7 @@ import com.gloomdev.restaurantapp.R
 import com.gloomdev.restaurantapp.ui.dataclass.ItemDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.gloomdev.restaurantapp.ui.activities.MenuDetails
 
 
 class MenuItemsAdapter(
