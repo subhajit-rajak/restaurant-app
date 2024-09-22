@@ -41,7 +41,7 @@ class MenuDetails : AppCompatActivity() {
         // Initialize Firebase references
         mAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
-        database.child("menu").child(RestuarantId.toString()).child(itemKey.toString())
+        database.child("menu").child(RestuarantId!!).child(itemKey!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val menuData = mutableListOf<MenuRestaurantScreen>()
@@ -64,7 +64,8 @@ class MenuDetails : AppCompatActivity() {
                            val userId = mAuth.currentUser?.uid
                             val userName = sharedPreferences.getString("selectedUserName", "-")
                             val itemDetails = ItemDetails(userId,userName,it.foodName,it.foodImage,it.foodPrice.toInt(),
-                                it.foodPrice,RestuarantId!!,1)
+                                it.foodPrice,
+                                RestuarantId,1)
                             binding.AddToCart.setOnClickListener {
 
                                 val ItemDetails =   database.child("Customers").child("customerDetails").child(RestuarantId).child(userId!!).child("CartItems")

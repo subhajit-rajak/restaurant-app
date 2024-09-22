@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gloomdev.restaurantapp.databinding.FragmentSearchBinding
 import com.gloomdev.restaurantapp.ui.adapter.MenuItemsAdapter
-import com.gloomdev.restaurantapp.ui.dataclass.MenuItems
+import com.gloomdev.restaurantapp.ui.dataclass.MenuRestaurantScreen
 import com.gloomdev.restaurantapp.ui.dataclass.RestaurantIds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,11 +20,11 @@ import com.google.firebase.database.ValueEventListener
 
 class Search : Fragment() {
 
-    private var filteredList = arrayListOf<MenuItems>()
+    private var filteredList = arrayListOf<MenuRestaurantScreen>()
     private lateinit var binding: FragmentSearchBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var menuAdapter: MenuItemsAdapter
-    private lateinit var menuList: MutableList<MenuItems>
+    private lateinit var menuList: MutableList<MenuRestaurantScreen>
     private lateinit var userId: String
     private lateinit var database: FirebaseDatabase
 
@@ -65,7 +65,7 @@ class Search : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (userSnapshot in snapshot.children) {
                     for (menuSnapshot in userSnapshot.children) {
-                        val menuItem = menuSnapshot.getValue(MenuItems::class.java)
+                        val menuItem = menuSnapshot.getValue(MenuRestaurantScreen::class.java)
                         menuItem?.let { menuList.add(it) }
                     }
                     filteredList.clear()
@@ -83,7 +83,7 @@ class Search : Fragment() {
     // Filter the list based on the query
     private fun filterList(query: String) {
         val filtered = menuList.filter {
-            it.foodName.contains(query, ignoreCase = true)
+            it.foodName!!.contains(query, ignoreCase = true)
         }
         filteredList.clear()
         filteredList.addAll(filtered)
