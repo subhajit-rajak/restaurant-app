@@ -35,7 +35,7 @@
             android:id="@+id/UAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Flat, City, State"
+            android:text=""
             android:textSize="14sp"
             android:fontFamily="@font/inter"
             android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"

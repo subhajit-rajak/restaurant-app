@@ -240,6 +240,23 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/addAddressFirstTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="120dp"
+                android:background="@drawable/orange_button"
+                android:gravity="center"
+                android:text="Add Your Address "
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/deliverToText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Deliver to :"

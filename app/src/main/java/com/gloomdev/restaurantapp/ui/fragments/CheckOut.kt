@@ -23,10 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.text.SimpleDateFormat
 import java.util.ArrayList
-import java.util.Date
-import java.util.Locale
 
 class CheckOut : Fragment() {
 
@@ -37,6 +34,9 @@ class CheckOut : Fragment() {
     private lateinit var cartAdapter: CartAdapter
     private lateinit var itemDetailsList: MutableList<ItemDetails>
     private var userId: String? = null
+    private var userName: String? = null
+    private var userAddress: String? = null
+    private var phoneNumber: String? = null
     private var userIdOfRestaurant: String? = null
 
     override fun onCreateView(
@@ -102,31 +102,72 @@ class CheckOut : Fragment() {
             Toast.makeText(context, "User ID or Restaurant ID is null", Toast.LENGTH_SHORT).show()
         }
 
-        binding.checkOutTxt.setOnClickListener {
-            if (itemDetailsList.isNotEmpty()) {
-//                placeOrder(userId, userIdOfRestaurant)
-                placeOrder()
 
-            } else {
-                Toast.makeText(context, "Cart is empty!", Toast.LENGTH_SHORT).show()
-            }
-        }
+
+        setupAddressView()
+
+
 
         binding.cartAddressChange.setOnClickListener {
             val intent = Intent(context, AllAddress::class.java)
             startActivity(intent)
         }
+
+        binding.addAddressFirstTxt.setOnClickListener {
+            val intent = Intent(context, AllAddress::class.java)
+            startActivity(intent)
+        }
+
+        binding.checkOutTxt.setOnClickListener {
+            if (itemDetailsList.isNotEmpty()) {
+//                placeOrder(userId, userIdOfRestaurant)
+                placeOrder(userName, userAddress, phoneNumber)
+
+            } else {
+                Toast.makeText(context, "Cart is empty!", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
-    private fun placeOrder() {
+    override fun onResume() {
+        super.onResume()
+        // Refresh address when returning to the CheckOut fragment
+        setupAddressView()
+    }
+
+    private fun setupAddressView() {
+        // Retrieve address details from SharedPreferences
+        userName = sharedPreferences.getString("selectedUserName", "")
+        userAddress = sharedPreferences.getString("selectedAddress", "")
+        phoneNumber = sharedPreferences.getString("CustomerPhoneNumber", "")
+
+        // Display address if available, or show "Add Address" message
+        if (!userName.isNullOrEmpty() && !userAddress.isNullOrEmpty() && !phoneNumber.isNullOrEmpty()) {
+            binding.cartAllName.text = userName
+            binding.cartAllFlat.text = userAddress
+            binding.cartAllMobile.text = phoneNumber
+
+            binding.cartAddressCard.visibility = View.VISIBLE
+            binding.deliverToText.visibility = View.VISIBLE
+            binding.checkOutTxt.visibility = View.VISIBLE
+            binding.addAddressFirstTxt.visibility = View.GONE
+        } else {
+            binding.cartAddressCard.visibility = View.INVISIBLE
+            binding.deliverToText.visibility = View.INVISIBLE
+            binding.checkOutTxt.visibility = View.INVISIBLE
+            binding.addAddressFirstTxt.visibility = View.VISIBLE
+        }
+    }
+
+    private fun placeOrder(userName: String?, userAddress: String?, phoneNumber: String?) {
         userId = mAuth.currentUser?.uid
         val time = System.currentTimeMillis()
         val itemPushKey = database.child("OrderDetails").push().key
 
-//        // Retrieve address details from shared preferences
-        val userName = sharedPreferences.getString("selectedUserName", "-")
-        val userAddress = sharedPreferences.getString("selectedAddress", "-")
-        val phoneNumber = sharedPreferences.getString("CustomerPhoneNumber", "-")
+////        // Retrieve address details from shared preferences
+//        val userName = sharedPreferences.getString("selectedUserName", "")
+//        val userAddress = sharedPreferences.getString("selectedAddress", "")
+//        val phoneNumber = sharedPreferences.getString("CustomerPhoneNumber", "")
 
         val totalPrice = binding.totalTxt.text.toString()
 
@@ -135,31 +176,40 @@ class CheckOut : Fragment() {
         val foodImages = itemDetailsList.map { it.foodImages!! } as ArrayList<String>
         val foodPrices = itemDetailsList.map { it.foodPrices.toString() } as ArrayList<String>
         val foodQuantities = itemDetailsList.map { it.foodQuantities!! } as ArrayList<Int>
-        val orderDetails = OrderDetails(
-            userId,
-            userName,
-            foodNames,
-            foodImages,
-            foodPrices,
-            foodQuantities,
-            userAddress,
-            totalPrice,
-            phoneNumber,
-            time,
-            itemPushKey,
-            false,
-            false
-        )
-        val orderReference = database.child("OrderDetails").child(userIdOfRestaurant!!).child(itemPushKey!!)
-        orderReference.setValue(orderDetails).addOnSuccessListener {
-            val navController = findNavController()
-            navController.navigate(R.id.action_checkOutFragment_to_bottomsheetFragment)
-            removeItemFromCart()
-            addOrderToHistory(orderDetails)
-        }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to place order: ${it.message}", Toast.LENGTH_SHORT).show()
+
+
+
+            val orderDetails = OrderDetails(
+                userId,
+                userName,
+                foodNames,
+                foodImages,
+                foodPrices,
+                foodQuantities,
+                userAddress,
+                totalPrice,
+                phoneNumber,
+                time,
+                itemPushKey,
+                false,
+                false
+            )
+            val orderReference =
+                database.child("OrderDetails").child(userIdOfRestaurant!!).child(itemPushKey!!)
+            orderReference.setValue(orderDetails).addOnSuccessListener {
+                val navController = findNavController()
+                navController.navigate(R.id.action_checkOutFragment_to_bottomsheetFragment)
+                removeItemFromCart()
+                addOrderToHistory(orderDetails)
             }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        context,
+                        "Failed to place order: ${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
     }
 
     private fun addOrderToHistory(orderDetails: OrderDetails) {
@@ -243,10 +293,4 @@ class CheckOut : Fragment() {
         binding.totalTxt.text = finalTotalPrice.toString()
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.cartAllName.text = sharedPreferences.getString("selectedUserName", "-")
-        binding.cartAllFlat.text = sharedPreferences.getString("selectedAddress", "-")
-        binding.cartAllMobile.text = sharedPreferences.getString("CustomerPhoneNumber", "-")
-    }
 }
