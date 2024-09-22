@@ -28,6 +28,7 @@
                 android:fontFamily="@font/inter_bold" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -366,6 +367,7 @@
 <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--            </androidx.cardview.widget.CardView>-->
             <TextView
+                android:visibility="gone"
                 android:id="@+id/checkOutTxt"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -89,27 +89,44 @@ class Home : Fragment() {
     override fun onResume() {
         super.onResume()
         sharedPreferences = requireActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-        binding.UAddress.text = buildString {
-            append(sharedPreferences.getString("selectedFlat", " - "))
-            append(", ")
-            append(sharedPreferences.getString("selectedArea", " - "))
-            append(", ")
-            append(sharedPreferences.getString("selectedState", " - "))
+
+        val flat = sharedPreferences.getString("selectedFlat","")
+        val area = sharedPreferences.getString("selectedArea","")
+        val state = sharedPreferences.getString("selectedState","")
+
+        if (flat!!.isNotEmpty()  && area!!.isNotEmpty() && state!!.isNotEmpty()){
+            binding.UAddress.text = buildString {
+                append(sharedPreferences.getString("selectedFlat", " - "))
+                append(", ")
+                append(sharedPreferences.getString("selectedArea", " - "))
+                append(", ")
+                append(sharedPreferences.getString("selectedState", " - "))
+            }
+        }else{
+            binding.UAddress.text = "Add Address!"
         }
 
-        var name = sharedPreferences.getString("selectedUserName", "Hii")
-        if (name != null) {
-            val spaceIndex = name.indexOf(" ")
+
+
+        var name = sharedPreferences.getString("selectedUserName", "")
+        if (name?.isNotEmpty() == true) {
+            val spaceIndex = name?.indexOf(" ")
             if(spaceIndex!=-1) {
-                name = name.substring(0, spaceIndex)
+                name = spaceIndex?.let { name?.substring(0, it) }
+            }
+            binding.UName.text = buildString {
+                append("Hey, ")
+                append(name)
+                append("!")
+            }
+        } else{
+            binding.UName.text = buildString {
+                append("Hey ")
+                append("!")
             }
         }
 
-        binding.UName.text = buildString {
-            append("Hey, ")
-            append(name)
-            append("!")
-        }
+
         //binding.name.text = sharedPreferences.getString("username", "")+", What's on your mind?"
     }
 }

@@ -65,6 +65,8 @@ class Cart : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         itemDetailsList = mutableListOf()
                         if (snapshot.exists()) {
+                            binding.recyclerview.visibility = View.VISIBLE
+                            binding.checkOutTxt.visibility = View.VISIBLE
                             for (itemSnapshot in snapshot.children) {
                                 val item = itemSnapshot.getValue(ItemDetails::class.java)
                                 item?.let { itemDetailsList.add(it) }
@@ -104,7 +106,8 @@ class Cart : Fragment() {
                     }
                 })
         } else {
-            Toast.makeText(context, "User ID or Restaurant ID is null", Toast.LENGTH_SHORT).show()
+            binding.emptyCartTxt.visibility = View.VISIBLE
+//            Toast.makeText(context, "User ID or Restaurant ID is null", Toast.LENGTH_SHORT).show()
         }
 
         binding.checkOutTxt.setOnClickListener {

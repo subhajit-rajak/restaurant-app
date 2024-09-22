@@ -1,5 +1,6 @@
 package com.gloomdev.restaurantapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -78,12 +79,14 @@ class History : Fragment() {
         val buyItemReference:DatabaseReference= database.reference.child("Customers").child("customerDetails").child(userId).child("BuyHistory")
         val shortingQuery:Query = buyItemReference.orderByChild("currentTime")
         shortingQuery.addListenerForSingleValueEvent(object : ValueEventListener{
+            @SuppressLint("SuspiciousIndentation")
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (buySnapshot in snapshot.children){
-                    val childCount = buySnapshot.childrenCount
-//                    if(childCount <= 1){
-//                        binding.previousTxt.visibility = View.INVISIBLE
-//                    }
+                val childCount = snapshot.childrenCount
+                    if(childCount <= 1){
+                        binding.previousTxt.visibility = View.INVISIBLE
+                    }
+                  for (buySnapshot in snapshot.children){
+
                     val buyHistoryItem = buySnapshot.getValue(OrderDetails::class.java)
                     buyHistoryItem?.let {
                         listOfOrderItem.add(it)
